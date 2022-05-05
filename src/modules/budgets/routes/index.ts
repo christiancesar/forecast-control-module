@@ -2,7 +2,7 @@ import { Router } from "express";
 import multer from "multer";
 import ImportBudgetController from "../controllers/ImportBudgetController";
 
-import { storage } from "../../config/uploadStorage"
+import { storage } from "../../../config/uploadStorage"
 
 const upload = multer({ storage });
 

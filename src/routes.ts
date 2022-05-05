@@ -1,6 +1,6 @@
 import { Router } from "express";
-import budgetsRouter from "./budgets/routes";
-import employeesRouter from "./employees/routes";
+import budgetsRouter from "./modules/budgets/routes";
+import employeesRouter from "./modules/employees/routes";
 
 const routes = Router();
 

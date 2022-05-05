@@ -1,6 +1,6 @@
-import BudgetItem from "./IBudgetItens";
+import BudgetItem from "./ICreateBudgetItemDTO";
 
-export default interface IBudget {
+export default interface ICreateBudgetDTO {
   shortId: number;
   customer: string;
   saller: string;
@@ -9,7 +9,4 @@ export default interface IBudget {
   subTotal: number;
   total: number;
   itensCount: number;
-  budgetItens: BudgetItem[];
-  createdAt: Date;
-  updatedAt: Date;
 }

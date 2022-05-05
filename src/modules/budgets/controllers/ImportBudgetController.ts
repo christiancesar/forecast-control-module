@@ -2,12 +2,12 @@ import { NextFunction, Request, Response } from 'express';
 import ImportBudgetService from '../services/ImportBudgetService';
 
 interface IRequest {
-  shortId: number;
+  shortId: string;
   customer: string;
   saller: string;
-  discont: number;
-  subTotal: number;
-  total: number;
+  discont: string;
+  subTotal: string;
+  total: string;
 }
 
 export default class ImportBudgetController {
