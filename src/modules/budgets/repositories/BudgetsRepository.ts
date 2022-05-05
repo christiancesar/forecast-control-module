@@ -24,7 +24,7 @@ class BudgetsRepository implements IBudgetsRepository {
     discontPercent,
     subTotal,
     total,
-    itensCount,
+    itemsCount,
   }: ICreateBudgetDTO): Promise<Budget> {
     const budget = new Budget({
       shortId,
@@ -34,7 +34,7 @@ class BudgetsRepository implements IBudgetsRepository {
       discontPercent,
       subTotal,
       total,
-      itensCount,
+      itemsCount,
     });
     this.budgets.push(budget);
     return budget

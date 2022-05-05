@@ -10,8 +10,8 @@ export default class Budget {
   discontPercent: number;
   subTotal: number;
   total: number;
-  itensCount: number;
-  budgetItens: BudgetItem[];
+  itemsCount: number;
+  budgetItems: BudgetItem[];
   createdAt: Date;
   updatedAt: Date;
 
@@ -23,8 +23,8 @@ export default class Budget {
     discontPercent,
     subTotal,
     total,
-    itensCount,    
-  }: Omit<Budget, 'id' | 'updatedAt' | 'createdAt' | 'budgetItens'>) {
+    itemsCount,    
+  }: Omit<Budget, 'id' | 'updatedAt' | 'createdAt' | 'budgetItems'>) {
     this.id = uuidv4();
     this.shortId = shortId;
     this.customer = customer;
@@ -33,8 +33,8 @@ export default class Budget {
     this.discontPercent = discontPercent;
     this.subTotal = subTotal;
     this.total = total;
-    this.itensCount = itensCount;
-    this.budgetItens = [];
+    this.itemsCount = itemsCount;
+    this.budgetItems = [];
     this.createdAt = new Date();
     this.updatedAt = new Date();
   }

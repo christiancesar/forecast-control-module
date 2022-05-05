@@ -6,7 +6,7 @@ import { parse } from 'csv-parse';
 import BudgetItem from '../interfaces/ICreateBudgetItemDTO';
 import Budget from '../interfaces/ICreateBudgetDTO';
 import BudgetsRepository from '../repositories/BudgetsRepository';
-import BudgetsItensRepository from '../repositories/BudgetsItensRepository';
+import BudgetsItemsRepository from '../repositories/BudgetsItemsRepository';
 
 interface IRequest {
   shortId: string;
@@ -31,7 +31,7 @@ export default class ImportBudgetService {
       subTotal: Number(subTotal), 
       total: Number(total), 
       discontPercent, 
-      itensCount: 0 
+      itemsCount: 0 
     })
 
     const contactsReadStream = fs.createReadStream(file);
@@ -46,7 +46,7 @@ export default class ImportBudgetService {
         cell.trim(),
       );
 
-      budget.itensCount += Number(quantity);
+      budget.itemsCount += Number(quantity);
 
       const subTotal = parseFloat((Number(quantity) * parseFloat(amount_unit)).toFixed(2))
 
@@ -54,7 +54,7 @@ export default class ImportBudgetService {
 
       const total = parseFloat((subTotal - discont).toFixed(2))
 
-      const budgetItem = await BudgetsItensRepository.create({
+      const budgetItem = await BudgetsItemsRepository.create({
         itemOrd: Number(ordenation),
         description,
         amount_unit: Number(amount_unit),
@@ -66,7 +66,7 @@ export default class ImportBudgetService {
         width: Number(width)
       })
 
-      budget.budgetItens.push(budgetItem);
+      budget.budgetItems.push(budgetItem);
 
     })
 

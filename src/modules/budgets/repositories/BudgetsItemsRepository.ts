@@ -1,19 +1,19 @@
 import BudgetItem from "../entities/BudgetItem";
 import ICreateBudgetItemDTO from "../interfaces/ICreateBudgetItemDTO";
 
-interface IBudgetsItensRepository {
+interface IBudgetsItemsRepository {
   create(data: ICreateBudgetItemDTO): Promise<BudgetItem>;
   update(budgetItem: BudgetItem): Promise<BudgetItem>;
-  findById(id: string): Promise<BudgetItem | undefined>;
-  findAllBudgets(): Promise<BudgetItem[]>;
+  findById(budgetItemId: string): Promise<BudgetItem | undefined>;
+  findAllBudgetsItems(): Promise<BudgetItem[]>;
 }
 
 
-class BudgetsRepository implements IBudgetsItensRepository {
-  budgetsItens: BudgetItem[];
+class BudgetsRepository implements IBudgetsItemsRepository {
+  budgetsItems: BudgetItem[];
 
   constructor() {
-    this.budgetsItens = [];
+    this.budgetsItems = [];
   }
 
   async create({
@@ -39,23 +39,23 @@ class BudgetsRepository implements IBudgetsItensRepository {
       total,
 
     });
-    this.budgetsItens.push(budgetItem);
+    this.budgetsItems.push(budgetItem);
     return budgetItem
   }
 
   async update(budgetItem: BudgetItem): Promise<BudgetItem> {
-    const budgetItemIndex = this.budgetsItens.findIndex((budgetItem: BudgetItem) => budgetItem === budgetItem)
-    this.budgetsItens[budgetItemIndex] = budgetItem;
-    return this.budgetsItens[budgetItemIndex]
+    const budgetItemIndex = this.budgetsItems.findIndex((budgetItem: BudgetItem) => budgetItem === budgetItem)
+    this.budgetsItems[budgetItemIndex] = budgetItem;
+    return this.budgetsItems[budgetItemIndex]
   }
 
-  async findById(id: string): Promise<BudgetItem | undefined> {
-    const budgetItenm = await this.budgetsItens.find((Budget) => Budget.id === id)
+  async findById(budgetItemId: string): Promise<BudgetItem | undefined> {
+    const budgetItenm = await this.budgetsItems.find((budgetItem: BudgetItem) => budgetItem.id === budgetItemId)
     return budgetItenm
   }
 
-  async findAllBudgets(): Promise<BudgetItem[]> {
-    return this.budgetsItens
+  async findAllBudgetsItems(): Promise<BudgetItem[]> {
+    return this.budgetsItems
   }
 }
 
