@@ -3,7 +3,7 @@ import ICreateResponsabilityDTO from "../interfaces/ICreateResponsabilityDTO";
 
 interface IResponsabilitiesRepository {
   create(data: ICreateResponsabilityDTO): Promise<Responsability>;
-  update(Responsability: Responsability): Promise<Responsability>;
+  update(responsability: Responsability): Promise<Responsability>;
   findById(id: string): Promise<Responsability | undefined>;
   findAllServicesTypes(): Promise<Responsability[]>;
 }
@@ -21,14 +21,14 @@ class ResponsabilitiesRepository implements IResponsabilitiesRepository {
     this.responsabilities.push(responsability);
     return responsability
   }
-  async update(Responsability: Responsability): Promise<Responsability> {
-    const ResponsabilityIndex = this.responsabilities.findIndex((Responsability: Responsability) => Responsability === Responsability)
-    this.responsabilities[ResponsabilityIndex] = Responsability;
-    return this.responsabilities[ResponsabilityIndex]
+  async update(responsability: Responsability): Promise<Responsability> {
+    const responsabilityIndex = this.responsabilities.findIndex((Responsability: Responsability) => Responsability === Responsability)
+    this.responsabilities[responsabilityIndex] = responsability;
+    return this.responsabilities[responsabilityIndex]
   }
   async findById(id: string): Promise<Responsability | undefined> {
-    const Responsability = await this.responsabilities.find((Responsability) => Responsability.id === id)
-    return Responsability
+    const responsability = await this.responsabilities.find((responsability: Responsability) => responsability.id === id)
+    return responsability
   }
   async findAllServicesTypes(): Promise<Responsability[]> {
     return this.responsabilities
