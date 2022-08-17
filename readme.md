@@ -1,77 +1,90 @@
 ![control](./src/assets/control.svg)
 
+# Introduction
+
+O sistema deve ser capaz de importar e fazer os cálculos de comissões antigas e permitir fazer lançamento das novas comissões.
+
+O sistema deve ser capaz de gerar relatório da comissão separada por funcionário, a estrutura deve seguir a seguinte estrutura: 
+
+--| Orcamento | Cliente
+
+----| Item| Descrição | Quantidade | Valor Item | Porcentagem comissão | Valor da comissão
+
+
+
+
+# Entities Map
+
 ```ts
-class Team {
-  name: string
-}
-
-class Aluminum extends Team {
-  employee: Employee[];
-  commissionPercent: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-class Responsibility {
-  uuid: string;
+class Department {
+  id: string;
   description: string;
+  employee: Employee[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+class ExpertArea {
+  id: string;
+  description: string; //Corte,Montagem, Instalação
   updatedAt: Date;
   createdAt: Date;
 }
 
-class ServicesType {
-  uuid: string;
-  description: string; //Corte,Montagem, Instalação
-  commissionPercent: number;
+class Commissioned{
+  id: string;
+  expertArea: ExpertArea;
+  commissionPercent?: number;
   updatedAt: Date;
   createdAt: Date;
 }
 
 class Employee {
-  uuid: string;
+  id: string;
   name: string;
   salary?: number;
-  responsibility: Responsibility;
-  commissionedBy?: Array<ServicesType>;
+  commissionedBy?: Commissioned[];
   updatedAt: Date;
   createdAt: Date;
 }
 
 class Production {
-  uuid: string;
-  serviceType: ServicesType; // qual serviço foi executado Corte, Montagem, Instalação 
+  id: string;
+  serviceType: ExpertArea; // qual serviço foi executado Corte, Montagem, Instalação 
   employee: Employee; // colaborador que executou o serviço
   productionAt: Date; // data que o foi produzido
+  commissionPercent: number;
   amount: number; // valor total da comissão
   updatedAt: Date;
   createdAt: Date;
 }
+
 class Stage {
-  uuid: string;
+  id: string;
   description: string;
   updatedAt: Date;
   createdAt: Date;
 }
 
 class Budget {
-  commissionStatus: boolean;
-  stage: Stage;
-  status: 'conclused' | 'doing'
-  uuid: string;
+  commissionStatus: 'open'|'closed';
+  stage?: Stage;
+  status: 'finished' | 'doing'
+  id: string;
   shortId: number;
   customer: string;
-  saller: Employee;
-  discont: number;
-  discontPercent: number;
+  seller: Employee;
+  discount: number;
+  discountPercent: number;
   subTotal: number;
   total: number;
-  itensAcount: number
+  itensAccount: number
   updatedAt: Date;
   createdAt: Date;
 }
 
 class BudgetItens {
-  uuid: string;
+  id: string;
   itemOrd: number;
   description: string;
   width: number;
@@ -80,9 +93,11 @@ class BudgetItens {
   amount_unit: number;
   discount: number;
   total: number;
-  production: Production;
+  production: Production[];
   updatedAt: Date;
   createdAt: Date;
-}
 
+  color: string;
+  grade: string;
+}
 ```

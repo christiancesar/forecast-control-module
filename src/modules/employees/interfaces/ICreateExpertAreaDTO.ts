@@ -1,4 +1,4 @@
-export default interface ICreateServiceTypeDTO {
+export default interface ICreateExpertAreaDTO {
   description: string; 
   commissionPercent: number;
 }

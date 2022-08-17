@@ -15,8 +15,8 @@ class EmployeesRepository implements IEmployeesRepository {
     this.employees = [];
   }
 
-  async create({ name, commissionedBy, responsabilityId, salary }: ICreateEmployeeDTO): Promise<Employee> {
-    const employee = new Employee({ name, responsabilityId, salary, commissionedBy});
+  async create({ name, commissionedBy, salary }: ICreateEmployeeDTO): Promise<Employee> {
+    const employee = new Employee({ name, salary, commissionedBy });
     this.employees.push(employee);
     return employee
   }

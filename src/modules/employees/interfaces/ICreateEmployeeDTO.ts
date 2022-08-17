@@ -1,7 +1,7 @@
+import ExpertArea from "../entities/ExpertArea";
 
 export default interface ICreateEmployeeDTO {
   name: string;
   salary?: number;
-	responsabilityId?: string;
-	commissionedBy?: string[];
+	commissionedBy?: Array<ExpertArea>;
 }
