@@ -1,17 +1,16 @@
-import { v4 as uuidv4 } from 'uuid'
 import BudgetItem from './BudgetItem';
 
 export default class Budget {
   id: string;
-  shortId: number;
+  shortId?: number;
   customer: string;
-  saller: string;
+  saller?: string;
   discont: number;
   discontPercent: number;
   subTotal: number;
   total: number;
-  itemsCount: number;
-  budgetItems: BudgetItem[];
+  itemsCount?: number;
+  budgetItems?: BudgetItem[];
   createdAt: Date;
   updatedAt: Date;
 
@@ -25,7 +24,7 @@ export default class Budget {
     total,
     itemsCount,    
   }: Omit<Budget, 'id' | 'updatedAt' | 'createdAt' | 'budgetItems'>) {
-    this.id = uuidv4();
+    this.id = '';
     this.shortId = shortId;
     this.customer = customer;
     this.saller = saller;

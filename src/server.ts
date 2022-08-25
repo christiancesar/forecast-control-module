@@ -2,9 +2,10 @@
 import cors from 'cors';
 import express from 'express';
 import { prisma } from '../prisma';
-import { getFilesDrive } from './providers/google/drive';
+import ImportXLSXtoNodeService from './modules/budgets/services/ImportXLSXtoNodeService';
 import routes from './routes';
 
+const importXLSXtoNodeService = new ImportXLSXtoNodeService()
 
 const app = express();
 
@@ -15,6 +16,6 @@ app.use(routes)
 app.listen(3000, async () => {
     await prisma.$connect()
     console.log(`Control started 🚀 `);
-    await getFilesDrive().catch((err) => {console.log(err);});
+    importXLSXtoNodeService.execute();
   }
 );

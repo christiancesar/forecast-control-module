@@ -1,0 +1,239 @@
+[
+  {
+    "name": "Planilha1",
+    "data": [
+      [
+        "Niedja Marrizze Alves Leal 1607"
+      ],
+      [
+        "TOTAL",
+        152794.4
+      ],
+      [
+        "DESCONTO",
+        43415.97
+      ],
+      [
+        "LIQUIDO"
+      ],
+      [
+        "ITENS"
+      ],
+      [
+        "DESC %"
+      ],
+      [],
+      [
+        "ORD.",
+        "NOME",
+        "L/H",
+        "QTD.",
+        "VLR.UNT",
+        "VLR.TOTAL",
+        "DESC.",
+        "VLR. DESCONTO",
+        "CORTE",
+        "COLAB.",
+        "DATA",
+        "MONTAGEM",
+        "COLAB.",
+        "DATA",
+        "INST.",
+        "COLAB.",
+        "DATA"
+      ],
+      [
+        1,
+        "PORTA DE GIRO 01 FOLHA COM LAMBRI DUPLO | LINHA 42...",
+        "1500 X 2600",
+        1,
+        7024.44,
+        7024.44
+      ],
+      [
+        2,
+        "MAXIM-AR COM 01 MÓDULO | GOLD...",
+        "1200 X 700",
+        1,
+        1012.29
+      ],
+      [
+        2,
+        "MAXIM-AR COM 01 MÓDULO | GOLD...",
+        "1200 X 700",
+        1,
+        1012.29
+      ],
+      [
+        2,
+        "MAXIM-AR COM 01 MÓDULO | GOLD...",
+        "1200 X 700",
+        1,
+        1012.29
+      ],
+      [
+        4,
+        "PAINEL FIXO 01 MÓDULO | GOLD...",
+        "1900 X 2700",
+        1,
+        5500.63,
+        5500.63
+      ],
+      [
+        6,
+        "PORTA DE CORRER 02 FOLHAS MÓVEIS | GOLD...",
+        "1400 X 2650",
+        1,
+        5291.07,
+        5291.07
+      ],
+      [
+        7,
+        "PORTA DE CORRER 02 FOLHAS MÓVEIS | GOLD...",
+        "1800 X 2650",
+        1,
+        5472.8,
+        5472.8
+      ],
+      [
+        8,
+        "PORTA DE CORRER 03 FOLHAS MÓVEIS | GOLD...",
+        "3200 X 2650",
+        1,
+        9241.23,
+        9241.23
+      ],
+      [
+        10,
+        "PORTA DE CORRER 06 FOLHAS MÓVEIS | GOLD...",
+        "7200 X 2650",
+        1,
+        21006.25,
+        21006.25
+      ],
+      [
+        11,
+        "PORTA DE GIRO 01 FOLHA COM LAMBRI RIPADO| MADEIRA CE...",
+        "800 X 2650",
+        1,
+        3817.48,
+        3817.48
+      ],
+      [
+        12,
+        "PAINEL FIXO EM LAMBRIL RIPADO MADEIRA CEREJEIRA REAL...",
+        "4850 X 3000",
+        1,
+        5677.21,
+        5677.21
+      ],
+      [
+        13,
+        "PORTAO LAMBRIL RIPADO MADEIRA CEREJEIRA REAL...",
+        "2050 X 2000",
+        1,
+        4040.72,
+        4040.72
+      ],
+      [
+        14,
+        "PORTA DE GIRO 02 FOLHAS COM VENEZIANA | GOLD...",
+        "1500 X 2000",
+        1,
+        3470.98,
+        3470.98
+      ],
+      [
+        15,
+        "GUARDA-CORPO FRONTAL | FECHAMENTO EM VIDRO | MONTAGE...",
+        "5700 X 800",
+        1,
+        5566.05,
+        5566.05
+      ],
+      [
+        16,
+        "GUARDA-CORPO FRONTAL | FECHAMENTO EM VIDRO | MONTAGE...",
+        "12500 X 800",
+        1,
+        12263.32,
+        12263.32
+      ],
+      [
+        17,
+        "GUARDA-CORPO FRONTAL | FECHAMENTO EM VIDRO | MONTAGE...",
+        "6200 X 1100",
+        1,
+        7803.24,
+        7803.24
+      ],
+      [
+        18,
+        "BOX ELEGANCE DE CORRER FRONTAL 02 FOLHAS (01 FIXA E ...",
+        "1300 X 2000",
+        1,
+        2576.04
+      ],
+      [
+        18,
+        "BOX ELEGANCE DE CORRER FRONTAL 02 FOLHAS (01 FIXA E ...",
+        "1300 X 2000",
+        1,
+        2576.04
+      ],
+      [
+        19,
+        "BOX ELEGANCE DE CORRER FRONTAL 02 FOLHAS (01 FIXA E ...",
+        "1200 X 2000",
+        1,
+        2502.32,
+        2502.32
+      ],
+      [
+        20,
+        "BOX ELEGANCE DE CORRER FRONTAL 02 FOLHAS (01 FIXA E ...",
+        "1400 X 2000",
+        1,
+        2649.76,
+        2649.76
+      ],
+      [
+        21,
+        "JANELA DE CORRER 02 FOLHAS MÓVEIS | GOLD...",
+        "2600 X 600",
+        1,
+        1658.22,
+        1658.22
+      ],
+      [
+        22,
+        "PORTA DE CORRER INTEGRADA 02 FOLHAS | GOLD...",
+        "2200 X 2650",
+        1,
+        11365.43
+      ],
+      [
+        22,
+        "PORTA DE CORRER INTEGRADA 02 FOLHAS | GOLD...",
+        "2200 X 2650",
+        1,
+        11365.43
+      ],
+      [
+        22,
+        "PORTA DE CORRER INTEGRADA 02 FOLHAS | GOLD...",
+        "2200 X 2650",
+        1,
+        11365.43
+      ],
+      [
+        23,
+        "PAINEL FIXO EM LAMBRIL RIPADO MADEIRA CEREJEIRA REAL...",
+        "5600 X 3350",
+        1,
+        7523.43,
+        7523.43
+      ]
+    ]
+  }
+]
