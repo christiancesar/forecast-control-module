@@ -40,9 +40,10 @@ model Employee {
 }
 
 model BudgetItem {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   itemOrd     Int
   description String
+  measure     String
   width       Int
   height      Int
   quantity    Float
@@ -50,20 +51,22 @@ model BudgetItem {
   discont     Float
   subTotal    Float
   total       Float
-  Budget      Budget? @relation(fields: [budgetId], references: [id])
-  budgetId    String? @db.ObjectId
+  Budget      Budget?  @relation(fields: [budgetId], references: [id])
+  budgetId    String?  @db.ObjectId
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
 }
 
 model Budget {
   id             String       @id @default(auto()) @map("_id") @db.ObjectId
   shortId        Int
   customer       String
-  saller         String
+  saller         String?
   discont        Float
   discontPercent Float
   subTotal       Float
   total          Float
-  itemsCount     Int
+  itemsCount     Int?
   budgetItems    BudgetItem[]
   updatedAt      DateTime     @updatedAt
   createdAt      DateTime     @default(now())

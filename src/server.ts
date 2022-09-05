@@ -16,6 +16,6 @@ app.use(routes)
 app.listen(3000, async () => {
     await prisma.$connect()
     console.log(`Control started 🚀 `);
-    importXLSXtoNodeService.execute();
+    // importXLSXtoNodeService.execute();
   }
 );

@@ -1,18 +1,18 @@
 import BudgetItem from './BudgetItem';
 
 export default class Budget {
-  id: string;
-  shortId?: number;
+  id!: string;
+  shortId: number;
   customer: string;
-  saller?: string;
+  saller?: string | null;
   discont: number;
   discontPercent: number;
   subTotal: number;
   total: number;
-  itemsCount?: number;
+  itemsCount?: number | null;
   budgetItems?: BudgetItem[];
-  createdAt: Date;
-  updatedAt: Date;
+  updatedAt!: Date;
+  createdAt!: Date;
 
   constructor({
     shortId,
@@ -23,8 +23,7 @@ export default class Budget {
     subTotal,
     total,
     itemsCount,    
-  }: Omit<Budget, 'id' | 'updatedAt' | 'createdAt' | 'budgetItems'>) {
-    this.id = '';
+  }: Omit<Budget, "id" | "updatedAt" | "createdAt">) {
     this.shortId = shortId;
     this.customer = customer;
     this.saller = saller;
@@ -34,7 +33,5 @@ export default class Budget {
     this.total = total;
     this.itemsCount = itemsCount;
     this.budgetItems = [];
-    this.createdAt = new Date();
-    this.updatedAt = new Date();
   }
 }

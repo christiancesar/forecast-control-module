@@ -1,20 +1,16 @@
+import { prisma } from "../../../../prisma";
 import Budget from "../entities/Budget";
 import ICreateBudgetDTO from "../interfaces/ICreateBudgetDTO";
 
 interface IBudgetsRepository {
   create(data: ICreateBudgetDTO): Promise<Budget>;
   update(budget: Budget): Promise<Budget>;
-  findById(id: string): Promise<Budget | undefined>;
+  findById(budgetId: string): Promise<Budget | null>;
   findAllBudgets(): Promise<Budget[]>;
 }
 
 
-class BudgetsRepository implements IBudgetsRepository {
-  budgets: Budget[];
-
-  constructor() {
-    this.budgets = [];
-  }
+export default class BudgetsRepository implements IBudgetsRepository {
 
   async create({
     shortId,
@@ -25,32 +21,51 @@ class BudgetsRepository implements IBudgetsRepository {
     subTotal,
     total,
     itemsCount,
+    budgetItems
   }: ICreateBudgetDTO): Promise<Budget> {
-    const budget = new Budget({
-      shortId,
-      customer,
-      saller,
-      discont,
-      discontPercent,
-      subTotal,
-      total,
-      itemsCount,
-    });
-    this.budgets.push(budget);
-    return budget
+    const budgetCreated = await prisma.budget.create({
+      data: {
+        shortId,
+        customer,
+        saller,
+        discont,
+        discontPercent,
+        subTotal,
+        total,
+        itemsCount,
+        budgetItems: {
+          create: budgetItems
+        }
+      }
+    })
+    return budgetCreated
   }
   async update(budget: Budget): Promise<Budget> {
-    const budgetIndex = this.budgets.findIndex((budget: Budget) => budget === budget)
-    this.budgets[budgetIndex] = budget;
-    return this.budgets[budgetIndex]
+    const budgetUpdated = await prisma.budget.update({
+      data: budget,
+      where: {
+        id: budget.id,
+      }
+    })
+    return budgetUpdated
   }
-  async findById(id: string): Promise<Budget | undefined> {
-    const budget = await this.budgets.find((budget) => budget.id === id)
+  async findById(budgetId: string): Promise<Budget | null> {
+    const budget = await prisma.budget.findFirst({
+      where: {
+        id: budgetId
+      },
+      include: {
+        budgetItems: true
+      }
+    });
     return budget
   }
+
   async findAllBudgets(): Promise<Budget[]> {
-    return this.budgets
+    return prisma.budget.findMany({
+      include: {
+        budgetItems: true
+      }
+    });
   }
 }
-
-export default new BudgetsRepository()

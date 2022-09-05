@@ -1,18 +1,18 @@
 
 export default class BudgetItem {
-  id: string;
+  id!: string;
   itemOrd: number;
   description: string;
   measure: string;
-  width?: number;
-  height?: number;
+  width: number;
+  height: number;
   quantity: number;
   amount_unit: number;
   discont: number;
   subTotal: number;
   total: number;
-  createdAt: Date;
-  updatedAt: Date;
+  updatedAt!: Date;
+  createdAt!: Date;
 
   constructor({
     itemOrd,
@@ -25,8 +25,7 @@ export default class BudgetItem {
     discont,
     subTotal,
     total,
-  }: Omit<BudgetItem, 'id' | 'updatedAt' | 'createdAt'>) {
-    this.id = '';
+  }: Omit<BudgetItem, "id" | "createdAt" | "updatedAt">) {
     this.itemOrd = itemOrd;
     this.description = description;
     this.measure = measure;
@@ -37,8 +36,5 @@ export default class BudgetItem {
     this.discont = discont;
     this.subTotal = subTotal;
     this.total = total;
-    this.createdAt = new Date();
-    this.updatedAt = new Date();
-
   }
 }
