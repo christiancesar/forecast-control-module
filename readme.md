@@ -24,6 +24,21 @@ class Department {
   updatedAt: Date;
 }
 
+enum CommissionType {
+  individual = "individual",
+  group, = "group"
+}
+
+class Still extends Department {
+  commissonType: CommissionType;
+  super();
+}
+
+class Glass extends Department {
+  commissonType: CommissionType;
+  super();
+}
+
 class ExpertArea {
   id: string;
   description: string; //Corte,Montagem, Instalação
@@ -44,17 +59,20 @@ class Employee {
   name: string;
   salary?: number;
   commissionedBy?: Commissioned[];
+  department: Department;
   updatedAt: Date;
   createdAt: Date;
 }
 
 class Production {
   id: string;
-  serviceType: ExpertArea; // qual serviço foi executado Corte, Montagem, Instalação 
+  expertArea: ExpertArea; // qual serviço foi executado Corte, Montagem, Instalação 
   employee: Employee; // colaborador que executou o serviço
   productionAt: Date; // data que o foi produzido
   commissionPercent: number;
   amount: number; // valor total da comissão
+  divisionBy: number;
+  amountByEmployees: number;
   updatedAt: Date;
   createdAt: Date;
 }
@@ -93,11 +111,11 @@ class BudgetItens {
   amount_unit: number;
   discount: number;
   total: number;
-  production: Production[];
+  productions: Production[];
   updatedAt: Date;
   createdAt: Date;
 
-  color: string;
-  grade: string;
+  color: string; //Cor
+  grade: string; //
 }
 ```
