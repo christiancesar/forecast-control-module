@@ -1,37 +1,46 @@
-import Employee from "../entities/Employee";
-import ICreateEmployeeDTO from "../interfaces/ICreateEmployeeDTO";
+import { randomUUID } from "crypto";
+import { EmployeeEntity } from "../entities/EmployeeEntity";
+import { CreateEmployeeDTO } from "../interfaces/CreateEmployeeDTO";
 
 interface IEmployeesRepository {
-  create(data: ICreateEmployeeDTO): Promise<Employee>;
-  update(employee: Employee): Promise<Employee>;
-  findById(employeeId: string): Promise<Employee | undefined>;
-  findAllServicesTypes(): Promise<Employee[]>;
+  create(data: CreateEmployeeDTO): Promise<EmployeeEntity>;
+  update(employee: EmployeeEntity): Promise<EmployeeEntity>;
+  findById(employeeId: string): Promise<EmployeeEntity | undefined>;
+  findAllServicesTypes(): Promise<EmployeeEntity[]>;
 }
 
-class EmployeesRepository implements IEmployeesRepository {
-  employees: Employee[];
+export default new class EmployeesRepository implements IEmployeesRepository {
+  employees: EmployeeEntity[];
 
   constructor() {
     this.employees = [];
   }
 
-  async create({ name, commissionedBy, salary }: ICreateEmployeeDTO): Promise<Employee> {
-    const employee = new Employee({ name, salary, commissionedBy });
+  async create({ name, commissionedBy, department, salary }: CreateEmployeeDTO): Promise<EmployeeEntity> {
+    const employee = new EmployeeEntity({
+      id: randomUUID() ,
+      name,
+      salary,
+      commissionedBy,
+      department,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
     this.employees.push(employee);
+    
     return employee
   }
-  async update(employee: Employee): Promise<Employee> {
-    const employeeIndex = this.employees.findIndex((employee: Employee) => employee === employee)
+  async update(employee: EmployeeEntity): Promise<EmployeeEntity> {
+    const employeeIndex = this.employees.findIndex((employee: EmployeeEntity) => employee === employee)
     this.employees[employeeIndex] = employee;
     return this.employees[employeeIndex]
   }
-  async findById(id: string): Promise<Employee | undefined> {
+  async findById(id: string): Promise<EmployeeEntity | undefined> {
     const employees = await this.employees.find((employee) => employee.id === id)
     return employees
   }
-  async findAllServicesTypes(): Promise<Employee[]> {
+  async findAllServicesTypes(): Promise<EmployeeEntity[]> {
     return this.employees
   }
 }
-
-export default new EmployeesRepository()

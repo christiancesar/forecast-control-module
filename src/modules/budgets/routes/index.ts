@@ -5,7 +5,6 @@ import ImportBudgetController from "../controllers/ImportBudgetController";
 import { storage } from "../../../config/uploadStorage";
 import BudgetsController from "../controllers/BudgetsController";
 import BudgetsItemsController from "../controllers/BudgetsItemsController";
-import stagesRouter from "./stagesRouter";
 
 const upload = multer({ storage });
 
@@ -21,8 +20,6 @@ budgetsRouter.post('/import', upload.single('budget'), importBudgetController.cr
 
 budgetsRouter.get('/items', budgetsItemsController.index);
 budgetsRouter.get('/items/:budgetItemId', budgetsItemsController.show);
-
-budgetsRouter.use('/stages', stagesRouter);
 
 budgetsRouter.get('/', budgetsController.index);
 budgetsRouter.get('/:budgetId', budgetsController.show);

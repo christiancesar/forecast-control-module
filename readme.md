@@ -26,7 +26,7 @@ class Department {
 
 enum CommissionType {
   individual = "individual",
-  group, = "group"
+  group = "group"
 }
 
 class Still extends Department {
@@ -36,6 +36,7 @@ class Still extends Department {
 
 class Glass extends Department {
   commissonType: CommissionType;
+  commissionPercent?: number;
   super();
 }
 
