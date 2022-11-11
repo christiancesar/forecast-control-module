@@ -56,13 +56,6 @@ model Production {
   createdAt         DateTime    @default(now())
 }
 
-model Stage {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  description String
-  updatedAt   DateTime @updatedAt
-  createdAt   DateTime @default(now())
-}
-
 model StageProduction {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   description String

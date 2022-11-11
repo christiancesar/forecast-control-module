@@ -2,11 +2,13 @@ import { randomUUID } from "crypto";
 import { EmployeeEntity } from "../entities/EmployeeEntity";
 import { CreateEmployeeDTO } from "../interfaces/CreateEmployeeDTO";
 
+type FindUserDTO = {
+  id: string;
+}
 interface IEmployeesRepository {
   create(data: CreateEmployeeDTO): Promise<EmployeeEntity>;
   update(employee: EmployeeEntity): Promise<EmployeeEntity>;
-  findById(employeeId: string): Promise<EmployeeEntity | undefined>;
-  findAllServicesTypes(): Promise<EmployeeEntity[]>;
+  findUserById(employee: FindUserDTO): Promise<EmployeeEntity | undefined>;
 }
 
 export default new class EmployeesRepository implements IEmployeesRepository {
@@ -18,7 +20,7 @@ export default new class EmployeesRepository implements IEmployeesRepository {
 
   async create({ name, commissionedBy, department, salary }: CreateEmployeeDTO): Promise<EmployeeEntity> {
     const employee = new EmployeeEntity({
-      id: randomUUID() ,
+      id: randomUUID(),
       name,
       salary,
       commissionedBy,
@@ -28,7 +30,7 @@ export default new class EmployeesRepository implements IEmployeesRepository {
     });
 
     this.employees.push(employee);
-    
+
     return employee
   }
   async update(employee: EmployeeEntity): Promise<EmployeeEntity> {
@@ -36,7 +38,7 @@ export default new class EmployeesRepository implements IEmployeesRepository {
     this.employees[employeeIndex] = employee;
     return this.employees[employeeIndex]
   }
-  async findById(id: string): Promise<EmployeeEntity | undefined> {
+  async findUserById({ id }: FindUserDTO): Promise<EmployeeEntity | undefined> {
     const employees = await this.employees.find((employee) => employee.id === id)
     return employees
   }
