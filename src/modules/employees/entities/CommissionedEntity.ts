@@ -1,16 +1,16 @@
-import { ExpertAreaEntity } from "./ExpertAreaEntity";
-
 export class CommissionedEntity{
   id: string;
-  expertArea: ExpertAreaEntity;
+  expertAreaId: string;
   commissionPercent: number;
+  active: boolean;
   updatedAt: Date;
   createdAt: Date;
 
-  constructor({ id, expertArea, commissionPercent, createdAt, updatedAt }: CommissionedEntity) {
+  constructor({ id, expertAreaId, commissionPercent, active, createdAt, updatedAt }: CommissionedEntity) {
     this.id = id;
-    this.expertArea = expertArea;
+    this.expertAreaId = expertAreaId;
     this.commissionPercent = commissionPercent;
+    this.active = active;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }

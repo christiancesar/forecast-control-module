@@ -5,8 +5,8 @@ export class EmployeeEntity {
   id: string;
   name: string;
   salary?: number;
-  commissionedBy?: CommissionedEntity[];
-  department?: DepartmentEntity;
+  commissionedBy: CommissionedEntity[];
+  department: DepartmentEntity;
   updatedAt: Date;
   createdAt: Date;
 

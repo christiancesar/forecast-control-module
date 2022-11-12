@@ -2,14 +2,20 @@ import { randomUUID } from "crypto";
 import { EmployeeEntity } from "../entities/EmployeeEntity";
 import { CreateEmployeeDTO } from "../interfaces/CreateEmployeeDTO";
 
-type FindUserDTO = {
+type FindEmployeeDTO = {
   id: string;
 }
+
+type FindEmployeeByNameDTO = {
+  name: string;
+};
+
 interface IEmployeesRepository {
   createEmployee(data: CreateEmployeeDTO): Promise<EmployeeEntity>;
   updateEmployee(employee: EmployeeEntity): Promise<EmployeeEntity>;
-  findEmployeeById(employee: FindUserDTO): Promise<EmployeeEntity | undefined>;
+  findEmployeeById(employee: FindEmployeeDTO): Promise<EmployeeEntity | undefined>;
   findAllEmployees(): Promise<EmployeeEntity[]>;
+  findEmployeeByName(employee: FindEmployeeByNameDTO): Promise<EmployeeEntity | undefined>;
 }
 
 export default new class EmployeesRepository implements IEmployeesRepository {
@@ -25,6 +31,7 @@ export default new class EmployeesRepository implements IEmployeesRepository {
       name,
       salary,
       department,
+      commissionedBy: [],
       createdAt: new Date(),
       updatedAt: new Date(),
     });
@@ -33,14 +40,14 @@ export default new class EmployeesRepository implements IEmployeesRepository {
 
     return employee
   }
-  
+
   async updateEmployee(employee: EmployeeEntity): Promise<EmployeeEntity> {
     const employeeIndex = await this.employees.findIndex((employee: EmployeeEntity) => employee === employee)
     this.employees[employeeIndex] = employee;
     return this.employees[employeeIndex]
   }
-  
-  async findEmployeeById({ id }: FindUserDTO): Promise<EmployeeEntity | undefined> {
+
+  async findEmployeeById({ id }: FindEmployeeDTO): Promise<EmployeeEntity | undefined> {
     const employees = await this.employees.find((employee) => employee.id === id)
     return employees
   }
@@ -48,4 +55,10 @@ export default new class EmployeesRepository implements IEmployeesRepository {
   async findAllEmployees(): Promise<EmployeeEntity[]> {
     return this.employees;
   }
+
+  async findEmployeeByName({ name }: FindEmployeeByNameDTO): Promise<EmployeeEntity | undefined> {
+    const employees = await this.employees.find((employee) => employee.name === name)
+    return employees
+  }
+
 }
