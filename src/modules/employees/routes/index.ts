@@ -1,10 +1,17 @@
-import {Router} from 'express';
+import { Router } from 'express';
+import EmployeesController from '../controllers/EmployeesController';
+import expertAreaRoutes from './expertAreaRoutes';
 
 const employeesRouter = Router();
+const employeesController = new EmployeesController();
 
+employeesRouter.use("/expert", expertAreaRoutes);
 
-employeesRouter.get('/')
-employeesRouter.post('/')
+employeesRouter.post('/', employeesController.create);
+employeesRouter.get('/:id', employeesController.show);
+employeesRouter.get('/', employeesController.list);
+employeesRouter.patch('/update/:id', employeesController.update);
+
 
 
 

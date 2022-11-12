@@ -1,18 +1,24 @@
 import { EmployeeEntity } from "../../entities/EmployeeEntity";
 import EmployeesRepository from "../../repositories/EmployeesRepository";
 
-type ShowEmployeeServiceParams = {
+type UpdateEmployeeServiceParams = {
   id: string;
+  name: string;
+  salary: number;
 }
 
-export class ShowEmployeeService {
-  async execute({ id }: ShowEmployeeServiceParams): Promise<EmployeeEntity> {
-
+export class UpdateEmployeeService {
+  async execute({ id, name, salary }: UpdateEmployeeServiceParams): Promise<EmployeeEntity> {
     const employee = await EmployeesRepository.findEmployeeById({ id });
 
     if (!employee) {
       throw new Error('Employee not found');
     }
+
+    employee.name = name;
+    employee.salary = salary;
+
+    await EmployeesRepository.updateEmployee(employee);
 
     return employee;
   }

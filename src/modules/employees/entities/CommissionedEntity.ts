@@ -2,8 +2,8 @@ import { ExpertAreaEntity } from "./ExpertAreaEntity";
 
 export class CommissionedEntity{
   id: string;
-  expertArea?: ExpertAreaEntity;
-  commissionPercent?: number;
+  expertArea: ExpertAreaEntity;
+  commissionPercent: number;
   updatedAt: Date;
   createdAt: Date;
 

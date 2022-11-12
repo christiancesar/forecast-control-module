@@ -27,7 +27,7 @@ type UpdateDepartmentDTO = {
 interface IDepartmentRepository {
   createDepartment(data: CreateDepartmentDTO): Promise<DepartmentEntity>;
   listDepartments(): Promise<DepartmentEntity[]>;
-  finDepartmentById(department: FindDeparmentDTO): Promise<DepartmentEntity | undefined>;
+  findDepartmentById(department: FindDeparmentDTO): Promise<DepartmentEntity | undefined>;
   updateDepartment(department: UpdateDepartmentDTO): Promise<DepartmentEntity>;
 }
 
@@ -59,23 +59,31 @@ export class DepartmentRepository implements IDepartmentRepository {
     return departmentArry;
   }
 
-  async finDepartmentById({ id }: FindDeparmentDTO): Promise<DepartmentEntity | undefined> {
+  async findDepartmentById({ id }: FindDeparmentDTO): Promise<DepartmentEntity | undefined> {
     const departmentFound = departmentArry.find(department => department.id === id);
     return departmentFound;
   }
 
-  async updateDepartment(department: UpdateDepartmentDTO): Promise<DepartmentEntity> {
-    const departmentIndex = departmentArry.findIndex(dep => dep.id === department.id);
+  async updateDepartment({
+    id,
+    active,
+    commissonType,
+    name,
+    commissionPercent,
+    description,
+    employees
+  }: UpdateDepartmentDTO): Promise<DepartmentEntity> {
+    const departmentIndex = departmentArry.findIndex(dep => dep.id === id);
     departmentArry[departmentIndex] = {
       id: departmentArry[departmentIndex].id,
-      name: departmentArry[departmentIndex].name,
-      description: departmentArry[departmentIndex].description,
+      name,
+      description,
+      commissonType,
+      commissionPercent,
+      active,
       employees: departmentArry[departmentIndex].employees,
-      commissonType: departmentArry[departmentIndex].commissonType,
-      commissionPercent: departmentArry[departmentIndex].commissionPercent,
-      active: departmentArry[departmentIndex].active,
       createdAt: departmentArry[departmentIndex].createdAt,
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     return departmentArry[departmentIndex];

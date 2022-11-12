@@ -8,7 +8,6 @@ type UpdateDepartmentParams = {
   id: string;
   name: string;
   description?: string;
-  employeesIds?: string[];
   commissonType: CommissionTypeEnum;
   commissionPercent?: number;
   active: boolean;
@@ -24,23 +23,19 @@ export class UpdateDepartmentService {
     name,
     commissionPercent,
     description,
-    employeesIds
   }: UpdateDepartmentParams): Promise<DepartmentEntity> {
-    const departmentExist = await DepartmentRepository.finDepartmentById({ id });
+    const departmentExist = await DepartmentRepository.findDepartmentById({ id });
 
     if (!departmentExist) {
       throw new Error("Department not found");
     }
 
-    const employees: EmployeeEntity[] = [];
+    departmentExist.name = name ? name : departmentExist.name;
+    departmentExist.description = description ? description : departmentExist.description;
+    departmentExist.active = active ? active : departmentExist.active;
+    departmentExist.commissonType = commissonType ? commissonType : departmentExist.commissonType;
+    departmentExist.commissionPercent = commissionPercent ? commissionPercent : departmentExist.commissionPercent;
 
-    if (employeesIds) {
-      employeesIds.map(async employeeId => {
-        await EmployeesRepository.findUserById({ id: employeeId });
-      });
-
-
-    }
 
     const department = await DepartmentRepository.updateDepartment({
       id,
@@ -49,7 +44,6 @@ export class UpdateDepartmentService {
       name,
       commissionPercent,
       description,
-      employees,
       
     });
 
