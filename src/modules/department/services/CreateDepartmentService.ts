@@ -1,6 +1,6 @@
 import { CommissionTypeEnum } from "../entities/CommissionTypeEnum";
 import { DepartmentEntity } from "../entities/DepartmentEntity";
-import { IDepartmentRepository } from "../repositories/interfaces/IDepartmentRepository";
+import { IDepartmentsRepository } from "../repositories/interfaces/IDepartmentsRepository";
 
 type CreateDepartmentParams = {
   name: string;
@@ -11,7 +11,7 @@ type CreateDepartmentParams = {
 
 export class CreateDepartmentService {
   constructor(
-    private departmentRepository: IDepartmentRepository
+    private departmentsRepository: IDepartmentsRepository
   ) {}
 
   async execute({
@@ -33,7 +33,7 @@ export class CreateDepartmentService {
         throw new Error("Commission type not found");
     }
 
-    const department = await this.departmentRepository.createDepartment({
+    const department = await this.departmentsRepository.createDepartment({
       name,
       description,
       commissionType,

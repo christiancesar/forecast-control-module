@@ -1,24 +1,9 @@
 import { randomUUID } from "crypto";
-import { EmployeeEntity } from "../entities/EmployeeEntity";
-import { CreateEmployeeDTO } from "../interfaces/CreateEmployeeDTO";
+import { CreateEmployeeDTO } from "../../dtos/CreateEmployeeDTO";
+import { EmployeeEntity } from "../../entities/EmployeeEntity";
+import { FindEmployeeByNameDTO, FindEmployeeDTO, IEmployeesRepository } from "../interfaces/IEmployeesRepository";
 
-type FindEmployeeDTO = {
-  id: string;
-}
-
-type FindEmployeeByNameDTO = {
-  name: string;
-};
-
-interface IEmployeesRepository {
-  createEmployee(data: CreateEmployeeDTO): Promise<EmployeeEntity>;
-  updateEmployee(employee: EmployeeEntity): Promise<EmployeeEntity>;
-  findEmployeeById(employee: FindEmployeeDTO): Promise<EmployeeEntity | undefined>;
-  findAllEmployees(): Promise<EmployeeEntity[]>;
-  findEmployeeByName(employee: FindEmployeeByNameDTO): Promise<EmployeeEntity | undefined>;
-}
-
-export default new class EmployeesRepository implements IEmployeesRepository {
+export default new class EmployeesFakeRepository implements IEmployeesRepository {
   employees: EmployeeEntity[];
 
   constructor() {
@@ -31,6 +16,7 @@ export default new class EmployeesRepository implements IEmployeesRepository {
       name,
       salary,
       department,
+      active: true,
       commissionedBy: [],
       createdAt: new Date(),
       updatedAt: new Date(),

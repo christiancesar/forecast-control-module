@@ -1,5 +1,5 @@
 import { DepartmentEntity } from "../entities/DepartmentEntity";
-import { IDepartmentRepository } from "../repositories/interfaces/IDepartmentRepository";
+import { IDepartmentsRepository } from "../repositories/interfaces/IDepartmentsRepository";
 
 type UpdateDepartmentParams = {
   id: string;
@@ -12,7 +12,7 @@ type UpdateDepartmentParams = {
 
 export class UpdateDepartmentService {
   constructor(
-    private departmentRepository: IDepartmentRepository
+    private departmentsRepository: IDepartmentsRepository
   ) { }
 
   async execute({
@@ -23,7 +23,7 @@ export class UpdateDepartmentService {
     commissionPercent,
     description,
   }: UpdateDepartmentParams): Promise<DepartmentEntity> {
-    const departmentExist = await this.departmentRepository.findDepartmentById({ id });
+    const departmentExist = await this.departmentsRepository.findDepartmentById({ id });
 
     if (!departmentExist) {
       throw new Error("Department not found");
@@ -36,7 +36,7 @@ export class UpdateDepartmentService {
     departmentExist.commissionPercent = commissionPercent ? commissionPercent : departmentExist.commissionPercent;
 
 
-    const department = await this.departmentRepository.updateDepartment({
+    const department = await this.departmentsRepository.updateDepartment({
       id,
       active,
       commissionType,

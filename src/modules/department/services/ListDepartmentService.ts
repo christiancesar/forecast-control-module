@@ -1,13 +1,13 @@
 import { DepartmentEntity } from "../entities/DepartmentEntity";
-import { IDepartmentRepository } from "../repositories/interfaces/IDepartmentRepository";
+import { IDepartmentsRepository } from "../repositories/interfaces/IDepartmentsRepository";
 
 export class ListDepartmentService {
   constructor(
-    private departmentRepository: IDepartmentRepository
+    private departmentsRepository: IDepartmentsRepository
   ) {}
 
   async execute(): Promise<DepartmentEntity[]> {
-    const departments = await this.departmentRepository.listDepartments();
+    const departments = await this.departmentsRepository.listDepartments();
     
     return departments
   }

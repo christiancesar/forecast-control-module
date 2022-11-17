@@ -1,6 +1,6 @@
 import { DepartmentEntity } from "../entities/DepartmentEntity";
-import DepartmentRepository from "../repositories/fakes/DepartmentFakeRepository";
-import { IDepartmentRepository } from "../repositories/interfaces/IDepartmentRepository";
+import DepartmentRepository from "../repositories/fakes/DepartmentsFakeRepository";
+import { IDepartmentsRepository } from "../repositories/interfaces/IDepartmentsRepository";
 
 type CreateDepartmentParams = {
   id: string;
@@ -8,11 +8,11 @@ type CreateDepartmentParams = {
 
 export class ShowDepartmentService {
   constructor(
-    private departmentRepository: IDepartmentRepository
+    private departmentsRepository: IDepartmentsRepository
   ) { }
 
   async execute({ id }: CreateDepartmentParams): Promise<DepartmentEntity> {
-    const department = await this.departmentRepository.findDepartmentById({ id });
+    const department = await this.departmentsRepository.findDepartmentById({ id });
 
     if (!department) {
       throw new Error("Department not found");

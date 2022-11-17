@@ -1,5 +1,5 @@
 import { EmployeeEntity } from "../entities/EmployeeEntity";
-import CommissionedRepository from "../repositories/CommissionedRepository";
+import CommissionedRepository from "../repositories/fakes/CommissionedFakeRepository";
 import EmployeesRepository from "../repositories/EmployeesRepository";
 
 type DeleteEmployeeCommissionedParams = {

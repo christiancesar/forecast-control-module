@@ -6,6 +6,9 @@ type ShowEmployeeServiceParams = {
 }
 
 export class ShowEmployeeService {
+
+  constructor() {}
+  
   async execute({ id }: ShowEmployeeServiceParams): Promise<EmployeeEntity> {
 
     const employee = await EmployeesRepository.findEmployeeById({ id });

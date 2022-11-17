@@ -1,5 +1,4 @@
-import { DepartmentEntity } from "../../../department/entities/DepartmentEntity";
-import DepartmentRepository from "../../../department/repositories/DepartmentRepository";
+import DepartmentRepository from "../../../department/repositories/fakes/DepartmentsFakeRepository";
 import { EmployeeEntity } from "../../entities/EmployeeEntity";
 import EmployeesRepository from "../../repositories/EmployeesRepository";
 

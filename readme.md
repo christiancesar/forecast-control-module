@@ -29,17 +29,6 @@ enum CommissionType {
   group = "group"
 }
 
-class Still extends Department {
-  commissonType: CommissionType;
-  super();
-}
-
-class Glass extends Department {
-  commissonType: CommissionType;
-  commissionPercent?: number;
-  super();
-}
-
 class ExpertArea {
   id: string;
   description: string; //Corte,Montagem, Instalação
@@ -122,7 +111,7 @@ class BudgetItens {
 ```
 
 
-```json
+```JSON
 
 {
   "budget": {
@@ -187,7 +176,8 @@ class BudgetItens {
             "createdAt": "2022-09-05T21:38:44.208Z"  
           },
           {
-            "id": "9908b8ba-3865-4b12-afba-573eecc0dd5", "budgetItemId": "63166c64f54f0c0dddb5a731",
+            "id": "9908b8ba-3865-4b12-afba-573eecc0dd5", 
+            "budgetItemId": "63166c64f54f0c0dddb5a731",
             "serviceType": "Manutenção",
             "employee": "Ademir Jorge",
             "commissionPercent": 10,

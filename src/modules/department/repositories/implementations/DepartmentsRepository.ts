@@ -1,8 +1,8 @@
 import { prisma } from "../../../../../prisma";
 import { DepartmentEntity } from "../../entities/DepartmentEntity";
-import { CreateDepartmentDTO, FindDeparmentDTO, IDepartmentRepository, UpdateDepartmentDTO } from "../interfaces/IDepartmentRepository";
+import { CreateDepartmentDTO, FindDeparmentDTO, IDepartmentsRepository, UpdateDepartmentDTO } from "../interfaces/IDepartmentsRepository";
 
-export class DepartmentRepository implements IDepartmentRepository {
+export class DepartmentsRepository implements IDepartmentsRepository {
   async createDepartment({
     name,
     commissionType,

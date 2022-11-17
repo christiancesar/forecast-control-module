@@ -1,9 +1,9 @@
 import { randomUUID } from "crypto";
 import { artifactregistry } from "googleapis/build/src/apis/artifactregistry";
 import { DepartmentEntity } from "../../entities/DepartmentEntity";
-import { CreateDepartmentDTO, FindDeparmentDTO, IDepartmentRepository, UpdateDepartmentDTO } from "../interfaces/IDepartmentRepository";
+import { CreateDepartmentDTO, FindDeparmentDTO, IDepartmentsRepository, UpdateDepartmentDTO } from "../interfaces/IDepartmentsRepository";
 
-export class DepartmentFakeRepository implements IDepartmentRepository {
+export default new class DepartmentsFakeRepository implements IDepartmentsRepository {
   private departmentArry: DepartmentEntity[];
   
   constructor() {
@@ -69,5 +69,3 @@ export class DepartmentFakeRepository implements IDepartmentRepository {
     return this.departmentArry[departmentIndex];
   }
 }
-
-export default new DepartmentFakeRepository();

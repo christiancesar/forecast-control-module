@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { DepartmentRepository } from "../repositories/implementations/DepartmentRepository";
+import { DepartmentsRepository } from "../repositories/implementations/DepartmentsRepository";
 import { CreateDepartmentService } from "../services/CreateDepartmentService";
 import { ListDepartmentService } from "../services/ListDepartmentService";
 import { ShowDepartmentService } from "../services/ShowDepartmentService";
@@ -11,7 +11,7 @@ export class DepartmentsController {
   async create(request: Request, response: Response): Promise<Response> {
     const { name, description, commissionPercent, commissionType } = request.body;
     
-    const departmentRepository = new DepartmentRepository();
+    const departmentRepository = new DepartmentsRepository();
     const createDepartmentService = new CreateDepartmentService(departmentRepository);
 
     const department = await createDepartmentService.execute({
@@ -25,7 +25,7 @@ export class DepartmentsController {
   }
 
   async list(request: Request, response: Response): Promise<Response> {
-    const departmentRepository = new DepartmentRepository();
+    const departmentRepository = new DepartmentsRepository();
     const listDepartmentService = new ListDepartmentService(departmentRepository);
 
     const department = await listDepartmentService.execute();
@@ -37,7 +37,7 @@ export class DepartmentsController {
   async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const departmentRepository = new DepartmentRepository();
+    const departmentRepository = new DepartmentsRepository();
     const showDepartmentService = new ShowDepartmentService(departmentRepository);
 
     const department = await showDepartmentService.execute({ id });
@@ -49,7 +49,7 @@ export class DepartmentsController {
     const { id } = request.params;
     const { name, description, commissionPercent, commissionType, active } = request.body;
     
-    const departmentRepository = new DepartmentRepository();
+    const departmentRepository = new DepartmentsRepository();
     const updateDepartmentService = new UpdateDepartmentService(departmentRepository);
 
     const department = await updateDepartmentService.execute({

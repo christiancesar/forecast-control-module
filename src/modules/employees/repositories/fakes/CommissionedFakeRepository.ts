@@ -1,28 +1,10 @@
 import { randomUUID } from "crypto";
-import { CommissionedEntity } from "../entities/CommissionedEntity";
+import { CommissionedEntity } from "../../entities/CommissionedEntity";
+import { CreateCommissionedDTO, ICommissionedRepository, SoftDeleteCommissionedDTO, UpdateCommissionedDTO } from "../interfaces/ICommissionedRepository";
 
-type CreateCommissionedDTO = {
-  expertAreaId: string;
-  commissionPercent: number;
-};
 
-type UpdateCommissionedDTO = {
-  id: string;
-  commissionPercent: number;
-  active: boolean;
-};
 
-type SoftDeleteCommissionedDTO = {
-  id: string;
-}
-
-interface ICommissionedRepository {
-  createCommissioned(commissioned: CreateCommissionedDTO): Promise<CommissionedEntity>;
-  updateCommissioned(commissioned: UpdateCommissionedDTO): Promise<CommissionedEntity>;
-  softDeleteCommissioned(commissioned: SoftDeleteCommissionedDTO): Promise<CommissionedEntity>;
-};
-
-export default new class CommissionedRepository implements ICommissionedRepository {
+export default new class CommissionedFakeRepository implements ICommissionedRepository {
   commissionedArray: CommissionedEntity[] = [];
 
   constructor() {

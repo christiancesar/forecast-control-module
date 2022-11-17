@@ -1,5 +1,5 @@
 import { CommissionedEntity } from "../entities/CommissionedEntity";
-import CommissionedRepository from "../repositories/CommissionedRepository";
+import CommissionedRepository from "../repositories/fakes/CommissionedFakeRepository";
 
 type UpdateEmployeeCommissionedParams = {
   id: string;

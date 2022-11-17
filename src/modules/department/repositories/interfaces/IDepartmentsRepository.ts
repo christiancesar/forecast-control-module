@@ -20,7 +20,7 @@ export type UpdateDepartmentDTO = {
   active: boolean;
 };
 
-export interface IDepartmentRepository {
+export interface IDepartmentsRepository {
   createDepartment(data: CreateDepartmentDTO): Promise<DepartmentEntity>;
   listDepartments(): Promise<DepartmentEntity[]>;
   findDepartmentById(department: FindDeparmentDTO): Promise<DepartmentEntity | null>;
