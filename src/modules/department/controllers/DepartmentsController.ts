@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { DepartmentRepository } from "../repositories/implementations/DepartmentRepository";
 import { CreateDepartmentService } from "../services/CreateDepartmentService";
 import { ListDepartmentService } from "../services/ListDepartmentService";
 import { ShowDepartmentService } from "../services/ShowDepartmentService";
@@ -8,22 +9,24 @@ export class DepartmentsController {
   constructor() { }
 
   async create(request: Request, response: Response): Promise<Response> {
-    const { name, description, commissionPercent, commissonType } = request.body;
-
-    const createDepartmentService = new CreateDepartmentService();
+    const { name, description, commissionPercent, commissionType } = request.body;
+    
+    const departmentRepository = new DepartmentRepository();
+    const createDepartmentService = new CreateDepartmentService(departmentRepository);
 
     const department = await createDepartmentService.execute({
       name,
       description,
       commissionPercent,
-      commissonType,
+      commissionType,
     });
 
     return response.json(department);
   }
 
   async list(request: Request, response: Response): Promise<Response> {
-    const listDepartmentService = new ListDepartmentService();
+    const departmentRepository = new DepartmentRepository();
+    const listDepartmentService = new ListDepartmentService(departmentRepository);
 
     const department = await listDepartmentService.execute();
 
@@ -34,7 +37,8 @@ export class DepartmentsController {
   async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const showDepartmentService = new ShowDepartmentService();
+    const departmentRepository = new DepartmentRepository();
+    const showDepartmentService = new ShowDepartmentService(departmentRepository);
 
     const department = await showDepartmentService.execute({ id });
 
@@ -43,18 +47,18 @@ export class DepartmentsController {
 
   async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-    const { name, description, commissionPercent, commissonType, active, employeesIds } = request.body;
-
-    const updateDepartmentService = new UpdateDepartmentService();
+    const { name, description, commissionPercent, commissionType, active } = request.body;
+    
+    const departmentRepository = new DepartmentRepository();
+    const updateDepartmentService = new UpdateDepartmentService(departmentRepository);
 
     const department = await updateDepartmentService.execute({
       id,
       name,
       description,
       commissionPercent,
-      commissonType,
+      commissionType,
       active,
-      employeesIds
     });
 
     return response.json(department);

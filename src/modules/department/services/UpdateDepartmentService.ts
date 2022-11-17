@@ -1,30 +1,29 @@
-import { EmployeeEntity } from "../../employees/entities/EmployeeEntity";
-import EmployeesRepository from "../../employees/repositories/EmployeesRepository";
-import { CommissionTypeEnum } from "../entities/CommissionTypeEnum";
 import { DepartmentEntity } from "../entities/DepartmentEntity";
-import DepartmentRepository from "../repositories/DepartmentRepository";
+import { IDepartmentRepository } from "../repositories/interfaces/IDepartmentRepository";
 
 type UpdateDepartmentParams = {
   id: string;
   name: string;
-  description?: string;
-  commissonType: CommissionTypeEnum;
-  commissionPercent?: number;
+  description: string | null;
+  commissionType: string;
+  commissionPercent: number | null;
   active: boolean;
 }
 
 export class UpdateDepartmentService {
-  constructor() { }
+  constructor(
+    private departmentRepository: IDepartmentRepository
+  ) { }
 
   async execute({
     id,
     active,
-    commissonType,
+    commissionType,
     name,
     commissionPercent,
     description,
   }: UpdateDepartmentParams): Promise<DepartmentEntity> {
-    const departmentExist = await DepartmentRepository.findDepartmentById({ id });
+    const departmentExist = await this.departmentRepository.findDepartmentById({ id });
 
     if (!departmentExist) {
       throw new Error("Department not found");
@@ -33,18 +32,17 @@ export class UpdateDepartmentService {
     departmentExist.name = name ? name : departmentExist.name;
     departmentExist.description = description ? description : departmentExist.description;
     departmentExist.active = active ? active : departmentExist.active;
-    departmentExist.commissonType = commissonType ? commissonType : departmentExist.commissonType;
+    departmentExist.commissionType = commissionType ? commissionType : departmentExist.commissionType;
     departmentExist.commissionPercent = commissionPercent ? commissionPercent : departmentExist.commissionPercent;
 
 
-    const department = await DepartmentRepository.updateDepartment({
+    const department = await this.departmentRepository.updateDepartment({
       id,
       active,
-      commissonType,
+      commissionType,
       name,
       commissionPercent,
-      description,
-      
+      description,      
     });
 
     return department;

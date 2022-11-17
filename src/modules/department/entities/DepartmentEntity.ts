@@ -1,13 +1,12 @@
 import { EmployeeEntity } from "../../employees/entities/EmployeeEntity";
-import { CommissionTypeEnum } from "./CommissionTypeEnum";
 
 export class DepartmentEntity {
   id: string;
   name: string;
-  description?: string;
+  description: string | null
   employees?: EmployeeEntity[];
-  commissonType: CommissionTypeEnum;
-  commissionPercent?: number;
+  commissionType: string;
+  commissionPercent: number | null
   active: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -17,7 +16,7 @@ export class DepartmentEntity {
     name,
     description,
     employees,
-    commissonType,
+    commissionType,
     commissionPercent,
     active,
     createdAt,
@@ -27,7 +26,7 @@ export class DepartmentEntity {
     this.name = name;
     this.description = description;
     this.employees = employees;
-    this.commissonType = commissonType;
+    this.commissionType = commissionType;
     this.commissionPercent = commissionPercent;
     this.active = active;
     this.createdAt = createdAt;
