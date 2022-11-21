@@ -1,5 +1,5 @@
 import { EmployeeEntity } from "../../entities/EmployeeEntity";
-import EmployeesRepository from "../../repositories/EmployeesRepository";
+import { IEmployeesRepository } from "../../repositories/interfaces/IEmployeesRepository";
 
 type ShowEmployeeServiceParams = {
   id: string;
@@ -7,11 +7,13 @@ type ShowEmployeeServiceParams = {
 
 export class ShowEmployeeService {
 
-  constructor() {}
+  constructor(
+    private employeesRepository: IEmployeesRepository
+  ) {}
   
   async execute({ id }: ShowEmployeeServiceParams): Promise<EmployeeEntity> {
 
-    const employee = await EmployeesRepository.findEmployeeById({ id });
+    const employee = await this.employeesRepository.findEmployeeById({ id });
 
     if (!employee) {
       throw new Error('Employee not found');

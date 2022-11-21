@@ -1,7 +1,8 @@
 import { EmployeeEntity } from "../entities/EmployeeEntity";
 import CommissionedRepository from "../repositories/fakes/CommissionedFakeRepository";
-import EmployeesRepository from "../repositories/EmployeesRepository";
-import ExpertAreaRepository from "../repositories/ExpertAreaRepository";
+import { ICommissionedRepository } from "../repositories/interfaces/ICommissionedRepository";
+import { IEmployeesRepository } from "../repositories/interfaces/IEmployeesRepository";
+import { IExpertAreaRepository } from "../repositories/interfaces/IExpertAreasRepository";
 
 type UpdateEmployeeCommissioned = {
   employeeId: string;
@@ -10,33 +11,37 @@ type UpdateEmployeeCommissioned = {
 };
 
 export class CreateEmployeeCommissionedService {
- 
+  constructor(
+    private expertAreaRepository: IExpertAreaRepository,
+    private commissionedRepository: ICommissionedRepository,
+    private employeesRepository: IEmployeesRepository
+  ) {}
+
   async execute({
     employeeId,
     commissionPercent,
     expertAreaId
   }: UpdateEmployeeCommissioned): Promise<EmployeeEntity> {
-    const expertAreaExist = await ExpertAreaRepository.findExpertAreaById({ id: expertAreaId });
+    const expertAreaExist = await this.expertAreaRepository.findExpertAreaById({ id: expertAreaId });
 
     if (!expertAreaExist) {
       throw new Error("Expert area not found");
     }
 
-    const employeeExist =  await EmployeesRepository.findEmployeeById({ id: employeeId });
+    const employeeExist =  await this.employeesRepository.findEmployeeById({ id: employeeId });
 
     if (!employeeExist) {
       throw new Error("Employee not found");
     }
 
-    const commissioned = await CommissionedRepository.createCommissioned({
+    await this.commissionedRepository.createCommissioned({
       commissionPercent,
-      expertAreaId
+      expertAreaId,
+      employeeId
     })
-    
-    employeeExist.commissionedBy?.push(commissioned);
+  
+    const employee = await this.employeesRepository.findEmployeeById({ id: employeeId });
 
-    const employee = await EmployeesRepository.updateEmployee(employeeExist);
-
-    return employee;
+    return employee!;
   }
 }

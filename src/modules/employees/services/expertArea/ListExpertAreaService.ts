@@ -1,9 +1,13 @@
 import { ExpertAreaEntity } from "../../entities/ExpertAreaEntity";
-import ExpertAreaRepository from "../../repositories/ExpertAreaRepository";
+import { IExpertAreaRepository } from "../../repositories/interfaces/IExpertAreasRepository";
 
 export class ListExpertAreaService {
+  constructor(
+    private expertAreaRepository: IExpertAreaRepository
+  ) {}
+
   async execute(): Promise<ExpertAreaEntity[]> {
-    const expertAreas = await ExpertAreaRepository.findAllExpertAreas();
+    const expertAreas = await this.expertAreaRepository.findAllExpertAreas();
 
     return expertAreas;
   }

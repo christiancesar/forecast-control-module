@@ -1,5 +1,6 @@
 import { CommissionedEntity } from "../entities/CommissionedEntity";
 import CommissionedRepository from "../repositories/fakes/CommissionedFakeRepository";
+import { ICommissionedRepository } from "../repositories/interfaces/ICommissionedRepository";
 
 type UpdateEmployeeCommissionedParams = {
   id: string;
@@ -8,12 +9,16 @@ type UpdateEmployeeCommissionedParams = {
 };
 
 export class UpdateEmployeeCommissionedService {
+  constructor(
+    private commissionedRepository: ICommissionedRepository
+  ) {}
+
   async execute({
     id,
     commissionPercent,
     active,
   }: UpdateEmployeeCommissionedParams): Promise<CommissionedEntity> {
-    const commissioned = await CommissionedRepository.updateCommissioned({
+    const commissioned = await this.commissionedRepository.updateCommissioned({
       id,
       commissionPercent,
       active,

@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { ExpertAreasRepository } from "../repositories/implementations/ExpertAreasRepository";
 import { CreateExpertAreaService } from "../services/expertArea/CreateExpertAreaService";
 import { ListExpertAreaService } from "../services/expertArea/ListExpertAreaService";
 import { ShowExpertAreaService } from "../services/expertArea/ShowExpertAreaService";
@@ -8,12 +9,14 @@ export class ExpertAreaController {
   constructor() { }
 
   async create(request: Request, response: Response): Promise<Response> {
-    const { name } = request.body;
+    const { name, description } = request.body;
 
-    const createExpertAreaService = new CreateExpertAreaService();
+    const expertAreaRepository = new ExpertAreasRepository();
+    const createExpertAreaService = new CreateExpertAreaService(expertAreaRepository);
 
     const expertArea = await createExpertAreaService.execute({
       name,
+      description
     });
 
     return response.json(expertArea);
@@ -22,7 +25,9 @@ export class ExpertAreaController {
   async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const showExpertAreaService = new ShowExpertAreaService();
+    const expertAreaRepository = new ExpertAreasRepository();
+    const showExpertAreaService = new ShowExpertAreaService(expertAreaRepository);
+
     const expertArea = await showExpertAreaService.execute({ id });
 
     return response.json(expertArea);
@@ -30,7 +35,9 @@ export class ExpertAreaController {
   }
 
   async list(request: Request, response: Response): Promise<Response> {
-    const listExpertAreaService = new ListExpertAreaService();
+    const expertAreaRepository = new ExpertAreasRepository();
+    const listExpertAreaService = new ListExpertAreaService(expertAreaRepository);
+
     const expertAreas = await listExpertAreaService.execute();
 
     return response.json(expertAreas);
@@ -42,7 +49,9 @@ export class ExpertAreaController {
     const { id } = request.params;
     const { name } = request.body;
 
-    const updateExpertAreaService = new UpdateExpertAreaService();
+    const expertAreaRepository = new ExpertAreasRepository();
+    const updateExpertAreaService = new UpdateExpertAreaService(expertAreaRepository);
+    
     const expertArea = await updateExpertAreaService.execute({ id, name });
 
     return response.json(expertArea);

@@ -12,12 +12,12 @@ datasource db {
 
 model Department {
   id                String     @id @default(auto()) @map("_id") @db.ObjectId
-  name              String
+  name              String     @unique
   description       String?
   commissionPercent Float?     @default(0)
   commissionType    String
-  employees         Employee[]
   active            Boolean    @default(true)
+  employees         Employee[]
   updatedAt         DateTime   @updatedAt
   createdAt         DateTime   @default(now())
 
@@ -25,33 +25,33 @@ model Department {
 }
 
 model ExpertArea {
-  id             String        @id @default(auto()) @map("_id") @db.ObjectId
-  description    String //Corte,Montagem, Instalação
-  Commissioned   Commissioned? @relation(fields: [commissionedId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  commissionedId String?       @db.ObjectId
-  updatedAt      DateTime      @updatedAt
-  createdAt      DateTime      @default(now())
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  name         String         @unique //Corte,Montagem, Instalação
+  description  String?
+  updatedAt    DateTime       @updatedAt
+  createdAt    DateTime       @default(now())
+  Commissioned Commissioned[]
 
   @@map("expert_areas")
 }
 
 model Commissioned {
-  id                String       @id @default(auto()) @map("_id") @db.ObjectId
-  expertArea        ExpertArea[]
-  expertAreaId      String       @db.ObjectId
+  id                String     @id @default(auto()) @map("_id") @db.ObjectId
+  expertAreaId      String     @db.ObjectId
+  expertArea        ExpertArea @relation(fields: [expertAreaId], references: [id])
   commissionPercent Float?
-  active            Boolean      @default(true)
-  Employee          Employee?    @relation(fields: [employeeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  employeeId        String?      @db.ObjectId
-  updatedAt         DateTime     @updatedAt
-  createdAt         DateTime     @default(now())
+  active            Boolean    @default(true)
+  Employee          Employee?  @relation(fields: [employeeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  employeeId        String?    @db.ObjectId
+  updatedAt         DateTime   @updatedAt
+  createdAt         DateTime   @default(now())
 
   @@map("commissioned")
 }
 
 model Employee {
   id             String         @id @default(auto()) @map("_id") @db.ObjectId
-  name           String
+  name           String         @unique
   salary         Float?
   commissionedBy Commissioned[]
   active         Boolean        @default(true)

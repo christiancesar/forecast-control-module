@@ -1,21 +1,65 @@
+import { prisma } from "../../../../../prisma";
 import { ExpertAreaEntity } from "../../entities/ExpertAreaEntity";
 import { CreateExpertAreaDTO, FindExpertAreaByIdDTO, FindExpertAreaByNameDTO, IExpertAreaRepository, UpdateEmployeeDTO } from "../interfaces/IExpertAreasRepository";
 
 export class ExpertAreasRepository implements IExpertAreaRepository {
-  createExpertArea(data: CreateExpertAreaDTO): Promise<ExpertAreaEntity> {
-    throw new Error("Method not implemented.");
+
+  async createExpertArea({
+    name,
+    description
+  }: CreateExpertAreaDTO): Promise<ExpertAreaEntity> {
+    const expertArea = await prisma.expertArea.create({
+      data: {
+        name,
+        description,
+      }
+    })
+
+    return expertArea;
   }
-  findExpertAreaById(data: FindExpertAreaByIdDTO): Promise<ExpertAreaEntity | undefined> {
-    throw new Error("Method not implemented.");
+
+  async findExpertAreaById({ id }: FindExpertAreaByIdDTO): Promise<ExpertAreaEntity | null> {
+    const expertArea = await prisma.expertArea.findFirst({
+      where: {
+        id
+      }
+    })
+
+    return expertArea;
   }
-  findExpertAreaByName(data: FindExpertAreaByNameDTO): Promise<ExpertAreaEntity | undefined> {
-    throw new Error("Method not implemented.");
+
+  async findExpertAreaByName({
+    name
+  }: FindExpertAreaByNameDTO): Promise<ExpertAreaEntity | null> {
+    const expertArea = await prisma.expertArea.findUnique({
+      where: {
+        name
+      }
+    })
+
+    return expertArea;
   }
-  findAllExpertAreas(): Promise<ExpertAreaEntity[]> {
-    throw new Error("Method not implemented.");
+
+  async findAllExpertAreas(): Promise<ExpertAreaEntity[]> {
+    const expertArea = await prisma.expertArea.findMany();
+
+    return expertArea;
   }
-  updateExpertArea(data: UpdateEmployeeDTO): Promise<ExpertAreaEntity> {
-    throw new Error("Method not implemented.");
+
+  async updateExpertArea({
+    id,
+    name
+  }: UpdateEmployeeDTO): Promise<ExpertAreaEntity> {
+    const expertArea = await prisma.expertArea.update({
+      where: {
+        id
+      },
+      data: {
+        name
+      }
+    })
+
+    return expertArea;
   }
 
 }

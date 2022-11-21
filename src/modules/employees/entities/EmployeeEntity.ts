@@ -7,7 +7,7 @@ export class EmployeeEntity {
   salary: number | null;
   active: boolean;
   commissionedBy: CommissionedEntity[];
-  department: DepartmentEntity;
+  department: DepartmentEntity | null;
   updatedAt: Date;
   createdAt: Date;
 

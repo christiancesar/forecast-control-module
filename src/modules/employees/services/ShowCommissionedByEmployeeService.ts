@@ -1,19 +1,25 @@
 import { CommissionedEntity } from "../entities/CommissionedEntity";
-import EmployeesRepository from "../repositories/EmployeesRepository";
+import { ICommissionedRepository } from "../repositories/interfaces/ICommissionedRepository";
+import { IEmployeesRepository } from "../repositories/interfaces/IEmployeesRepository";
 
 type ShowCommissionedByEmployeeParams = {
   employeeId: string;
 };
 
 export class ShowCommissionedByEmployeeService {
-
+  constructor(
+    private employeesRepository: IEmployeesRepository,
+    private commissionedRepository: ICommissionedRepository
+  ) {}
   async execute({ employeeId }: ShowCommissionedByEmployeeParams): Promise<CommissionedEntity[]> {
-    const employeeExist = await EmployeesRepository.findEmployeeById({ id: employeeId });
+    const employeeExist = await this.employeesRepository.findEmployeeById({ id: employeeId });
 
     if (!employeeExist) {
       throw new Error("Employee not found");
     }
 
-    return employeeExist.commissionedBy;
+    const commissioned = await this.commissionedRepository.showCommissionedByEmployee({ employeeId });
+
+    return commissioned;
   }
 }

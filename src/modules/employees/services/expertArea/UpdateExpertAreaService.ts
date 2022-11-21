@@ -1,5 +1,5 @@
 import { ExpertAreaEntity } from "../../entities/ExpertAreaEntity";
-import ExpertAreaRepository from "../../repositories/ExpertAreaRepository";
+import { IExpertAreaRepository } from "../../repositories/interfaces/IExpertAreasRepository";
 
 type UpdateExpertAreaServiceParams = {
   id: string;
@@ -7,20 +7,24 @@ type UpdateExpertAreaServiceParams = {
 }
 
 export class UpdateExpertAreaService {
+  constructor(
+    private expertAreaRepository: IExpertAreaRepository
+  ) {}
+
   async execute({ id, name }: UpdateExpertAreaServiceParams): Promise<ExpertAreaEntity> {
-    const expertArea = await ExpertAreaRepository.findExpertAreaById({ id });
+    const expertArea = await this.expertAreaRepository.findExpertAreaById({ id });
 
     if (!expertArea) {
       throw new Error('Expert Area not found');
     }
 
-    const expertAreaAlreadyExists = await ExpertAreaRepository.findExpertAreaByName({ name });
+    const expertAreaAlreadyExists = await this.expertAreaRepository.findExpertAreaByName({ name });
 
     if (expertAreaAlreadyExists) {
       throw new Error('Expert Area already exists');
     }
 
-    const updatedExpertArea = await ExpertAreaRepository.updateExpertArea({ id, name, });
+    const updatedExpertArea = await this.expertAreaRepository.updateExpertArea({ id, name, });
 
     return updatedExpertArea;
   }

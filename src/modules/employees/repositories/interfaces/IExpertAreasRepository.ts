@@ -2,6 +2,7 @@ import { ExpertAreaEntity } from "../../entities/ExpertAreaEntity";
 
 export type CreateExpertAreaDTO = {
   name: string;
+  description: string | null;
 };
 
 export type FindExpertAreaByNameDTO = {
@@ -19,8 +20,8 @@ export type UpdateEmployeeDTO = {
 
 export interface IExpertAreaRepository {
   createExpertArea(data: CreateExpertAreaDTO): Promise<ExpertAreaEntity>;
-  findExpertAreaById(data: FindExpertAreaByIdDTO): Promise<ExpertAreaEntity | undefined>;
-  findExpertAreaByName(data: FindExpertAreaByNameDTO): Promise<ExpertAreaEntity | undefined>;
+  findExpertAreaById(data: FindExpertAreaByIdDTO): Promise<ExpertAreaEntity | null>;
+  findExpertAreaByName(data: FindExpertAreaByNameDTO): Promise<ExpertAreaEntity | null>;
   findAllExpertAreas(): Promise<ExpertAreaEntity[]>;
   updateExpertArea(data: UpdateEmployeeDTO): Promise<ExpertAreaEntity>;
 }
