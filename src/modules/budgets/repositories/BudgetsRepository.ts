@@ -1,5 +1,5 @@
 import { prisma } from "../../../../prisma";
-import Budget from "../entities/Budget";
+import Budget from "../entities/BudgetEntity";
 import ICreateBudgetDTO from "../interfaces/ICreateBudgetDTO";
 
 interface IBudgetsRepository {
@@ -36,8 +36,12 @@ export default class BudgetsRepository implements IBudgetsRepository {
         budgetItems: {
           create: budgetItems
         }
+      },
+      include: {
+        budgetItems: true
       }
     })
+
     return budgetCreated
   }
   async update(budget: Budget): Promise<Budget> {
@@ -45,8 +49,12 @@ export default class BudgetsRepository implements IBudgetsRepository {
       data: budget,
       where: {
         id: budget.id,
+      },
+      include: {
+        budgetItems: true
       }
     })
+    
     return budgetUpdated
   }
   async findById(budgetId: string): Promise<Budget | null> {

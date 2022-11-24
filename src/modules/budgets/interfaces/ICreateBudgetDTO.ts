@@ -8,6 +8,6 @@ export default interface ICreateBudgetDTO {
   discontPercent: number;
   subTotal: number;
   total: number;
-  itemsCount?: number | null;
+  itemsCount: number;
   budgetItems: BudgetItem[];
 }

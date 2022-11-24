@@ -1,6 +1,7 @@
+import { randomUUID } from "crypto";
 
-export default class BudgetItem {
-  id!: string;
+export default class BudgetItemEntity {
+  id: string;
   itemOrd: number;
   description: string;
   measure: string;
@@ -11,8 +12,8 @@ export default class BudgetItem {
   discont: number;
   subTotal: number;
   total: number;
-  updatedAt!: Date;
-  createdAt!: Date;
+  updatedAt: Date;
+  createdAt: Date;
 
   constructor({
     itemOrd,
@@ -25,7 +26,8 @@ export default class BudgetItem {
     discont,
     subTotal,
     total,
-  }: Omit<BudgetItem, "id" | "createdAt" | "updatedAt">) {
+  }: BudgetItemEntity) {
+    this.id = randomUUID();
     this.itemOrd = itemOrd;
     this.description = description;
     this.measure = measure;
@@ -36,5 +38,7 @@ export default class BudgetItem {
     this.discont = discont;
     this.subTotal = subTotal;
     this.total = total;
+    this.createdAt = new Date();
+    this.updatedAt = new Date();
   }
 }

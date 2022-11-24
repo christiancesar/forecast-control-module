@@ -1,5 +1,5 @@
 import { prisma } from "../../../../prisma";
-import BudgetItem from "../entities/BudgetItem";
+import BudgetItem from "../entities/BudgetItemEntity";
 import ICreateBudgetItemDTO from "../interfaces/ICreateBudgetItemDTO";
 
 interface IBudgetsItemsRepository {

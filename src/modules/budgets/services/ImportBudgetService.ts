@@ -1,12 +1,9 @@
 
-import fs from 'fs';
 import { parse } from 'csv-parse';
-
-
-import BudgetItem from '../interfaces/ICreateBudgetItemDTO';
+import fs from 'fs';
 import Budget from '../interfaces/ICreateBudgetDTO';
-import BudgetsRepository from '../repositories/BudgetsRepository';
 import BudgetsItemsRepository from '../repositories/BudgetsItemsRepository';
+import BudgetsRepository from '../repositories/BudgetsRepository';
 
 interface IRequest {
   shortId: string;
@@ -19,11 +16,16 @@ interface IRequest {
 }
 
 export default class ImportBudgetService {
+  constructor(
+    private budgetsRepository: BudgetsRepository,
+    private budgetsItemsRepository: BudgetsItemsRepository,
+  ) {}
+
   async execute({ shortId, customer, saller, discont, subTotal, total, file }: IRequest): Promise<Budget> {
 
     const discontPercent = Math.round(100 - (Number(total) * 100 / Number(subTotal)));
 
-    const budget = await BudgetsRepository.create({ 
+    const budget = await this.budgetsRepository.create({ 
       shortId: Number(shortId), 
       customer, 
       saller, 
@@ -31,7 +33,8 @@ export default class ImportBudgetService {
       subTotal: Number(subTotal), 
       total: Number(total), 
       discontPercent, 
-      itemsCount: 0 
+      itemsCount: 0,
+      budgetItems: [] 
     })
 
     const contactsReadStream = fs.createReadStream(file);
@@ -54,7 +57,7 @@ export default class ImportBudgetService {
 
       const total = parseFloat((subTotal - discont).toFixed(2))
 
-      const budgetItem = await BudgetsItemsRepository.create({
+      const budgetItem = await this.budgetsItemsRepository.create({
         itemOrd: Number(ordenation),
         description,
         amount_unit: Number(amount_unit),
@@ -63,7 +66,8 @@ export default class ImportBudgetService {
         quantity: Number(quantity),
         subTotal,
         total,
-        width: Number(width)
+        width: Number(width),
+        measure: `${width}x${height}`,
       })
 
       budget.budgetItems.push(budgetItem);

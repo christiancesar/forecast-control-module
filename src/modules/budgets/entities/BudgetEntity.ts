@@ -1,7 +1,8 @@
-import BudgetItem from './BudgetItem';
+import { randomUUID } from 'crypto';
+import BudgetItem from './BudgetItemEntity';
 
-export default class Budget {
-  id!: string;
+export default class BudgetEntity {
+  id: string;
   shortId: number;
   customer: string;
   saller?: string | null;
@@ -9,10 +10,10 @@ export default class Budget {
   discontPercent: number;
   subTotal: number;
   total: number;
-  itemsCount?: number | null;
-  budgetItems?: BudgetItem[];
-  updatedAt!: Date;
-  createdAt!: Date;
+  itemsCount: number;
+  budgetItems: BudgetItem[];
+  updatedAt: Date;
+  createdAt: Date;
 
   constructor({
     shortId,
@@ -23,7 +24,8 @@ export default class Budget {
     subTotal,
     total,
     itemsCount,    
-  }: Omit<Budget, "id" | "updatedAt" | "createdAt">) {
+  }: BudgetEntity) {
+    this.id = randomUUID();
     this.shortId = shortId;
     this.customer = customer;
     this.saller = saller;
@@ -33,5 +35,7 @@ export default class Budget {
     this.total = total;
     this.itemsCount = itemsCount;
     this.budgetItems = [];
+    this.createdAt = new Date();
+    this.updatedAt = new Date();
   }
 }

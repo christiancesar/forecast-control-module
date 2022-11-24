@@ -1,4 +1,4 @@
-import BudgetItem from "../../entities/BudgetItem";
+import BudgetItem from "../../entities/BudgetItemEntity";
 import BudgetsItemsRepository from "../../repositories/BudgetsItemsRepository";
 
 interface IRequest {

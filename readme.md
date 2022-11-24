@@ -16,17 +16,18 @@ O sistema deve ser capaz de gerar relatório da comissão separada por funcioná
 # Entities Map
 
 ```ts
-class Department {
-  id: string;
-  description: string;
-  employee: Employee[];
-  createdAt: Date;
-  updatedAt: Date;
-}
-
 enum CommissionType {
   individual = "individual",
   group = "group"
+}
+
+class PersonalDepartment {
+  id: string;
+  description: string;
+  employee: PeopleEntity[];
+  commissionType: CommissionType;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 class ExpertArea {
@@ -46,12 +47,84 @@ class Commissioned{
 
 class Employee {
   id: string;
-  name: string;
   salary?: number;
   commissionedBy?: Commissioned[];
-  department: Department;
+  department: PersonalDepartment;
+}
+
+class Address {
+  id: string;
+  street: string;
+  number: string;
+  complement: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  zipCode: string;
   updatedAt: Date;
   createdAt: Date;
+}
+
+class PeopleEntityAbstract {
+  id: string;
+  email: string;
+  phone: string;
+  note: string; // Observações
+  address: Address;
+  updatedAt: Date;
+  createdAt: Date;
+}
+
+class Permission {
+  id: string;
+  name: string;
+  isMaterAdmin: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+class User extends PeopleEntityAbstract{ 
+  id: string;
+  name: string;
+  password: string;
+  avatar?: string;
+  permissions: Permission[];
+  userData: PeopleEntity; // Persistir como type UserData = PeopleEntity
+}
+
+class Company extends PeopleEntityAbstract {
+  employees: PeopleEntity[];
+  customers: PeopleEntity[];
+  suppliers: PeopleEntity[];
+  users: User[];
+  buggets: Bugget[];
+}
+
+enum TypePerson {
+  NATURAL = "natural",
+  JURIDICAL = "juridical"
+}
+
+// Clientes, Forncedores, Funcionários
+
+class PeopleEntity extends PeopleEntityAbstract { 
+  typePerson: TypePerson | string; //Pessoa Fisica ou Juridica
+  
+  fistName: string;
+  lastName: string;
+  fullName: string;
+  individualTaxIdentification: string; //CPF(ITIN)
+
+  tradingName: string; //Nome Fantasia
+  comapanyName: string; //Razão Social
+  stateRegistration: string; //Inscrição Estadual
+  employerIdentificationNumber: string; //CNPJ (EIN)
+
+  isCustomer: boolean;
+  isSupplier: boolean;
+  isEmployee: boolean;
+
+  employee: Employee;
 }
 
 class Production {
@@ -60,15 +133,36 @@ class Production {
   employee: Employee; // colaborador que executou o serviço
   productionAt: Date; // data que o foi produzido
   commissionPercent: number;
+  
+  /* 
+  Caso comissão seja individual, informado em commissionType contido em Department, o valor da comissão é calculado pelo valor especificado no campo "commissionPercent" dentro de Commissioned
+  */
+  
+
   amount: number; // valor total da comissão
-  divisionBy: number;
-  amountByEmployees: number;
+  
+  /* 
+  Caso for comissão em grupo, informado em commissionType contido em Department, o valor da comissao é calculado pelo valor especificado no campo "commissionPercent" dentro de Department
+  */
+
+  divisionBy: number; // quantidade de pessoas que dividiram a comissão
+  amountByEmployees: number; // valor da comissão por pessoa
+  
   updatedAt: Date;
   createdAt: Date;
 }
 
 class Stage {
   id: string;
+  name: string;
+  description: string;
+  updatedAt: Date;
+  createdAt: Date;
+}
+
+class WorkSpace {
+  id: string;
+  name: string;
   description: string;
   updatedAt: Date;
   createdAt: Date;
@@ -76,7 +170,6 @@ class Stage {
 
 class Budget {
   commissionStatus: 'open'|'closed';
-  stage?: Stage;
   status: 'finished' | 'doing'
   id: string;
   shortId: number;
@@ -104,134 +197,28 @@ class BudgetItens {
   productions: Production[];
   updatedAt: Date;
   createdAt: Date;
-
   color: string; //Cor
   grade: string; //
 }
+
+
+/*
+Controle de Acesso
+
+|->Owner(Christian Cesar)
+  |-> Company 01 (YoungWolf)
+    |-> 
+  |-> Company 02 (CopyRights)
+  |-> Company 03 (ForeCast)
+
+ - Cliente    -
+               |- Podem ser pessoas fisicas ou juridicas
+ - Fornecedor -
+
+- Usuarios -> Nada tem haver com o controle de Clientes e Fornecedores
+*/
+
+
 ```
 
 
-```JSON
-
-{
-  "budget": {
-    "id": "63166c64f54f0c0dddb5a730",
-    "shortId": 2914,
-    "customer": "Niedja Marrizze Alves Leal",
-    "saller": null,
-    "discont": 3732.69,
-    "discontPercent": 20.47,
-    "subTotal": 14500,
-    "total": 18232.69,
-    "itemsCount": null,
-    "updatedAt": "2022-09-05T21:38:44.211Z",
-    "createdAt": "2022-09-05T21:38:44.208Z",
-    "budgetItems": [
-      {
-        "budgetId": "63166c64f54f0c0dddb5a730",
-        "id": "63166c64f54f0c0dddb5a731",
-        "itemOrd": 1,
-        "description": "PERGOLADO",
-        "measure": "2400 X 2200",
-        "width": 2400,
-        "height": 2200,
-        "quantity": 1,
-        "amount_unit": 18232.69,
-        "discont": 3732.23,
-        "subTotal": 18232.69,
-        "total": 18232.69,
-        "department": "Still",
-        "productions": [
-          {
-            "id":"9908b8ba-3865-4b12-afba-573eecc00dd5,
-            "budgetItemId": "63166c64f54f0c0dddb5a731",
-            "serviceType": "Corte",
-            "employee": "Ademir Jorge",
-            "commissionPercent": 10,
-            "amount": 100.00
-            "productionAt": "2022-09-05T21:38:44.212Z",
-            "updatedAt": "2022-09-05T21:38:44.212Z",
-            "createdAt": "2022-09-05T21:38:44.208Z"   
-          },
-          {
-            "id":"9908b8ba-3865-4b12-afba-573eecc00dd5,
-            "budgetItemId": "63166c64f54f0c0dddb5a731",
-            "serviceType": "Manutenção",
-            "employee": "Ademir Jorge",
-            "commissionPercent": 10,
-            "amount": 100.00
-            "productionAt": "2022-09-05T21:38:44.212Z",
-            "updatedAt": "2022-09-05T21:38:44.212Z",
-            "createdAt": "2022-09-05T21:38:44.208Z"    
-          },
-          {
-            "id":"9908b8ba-3865-4b12-afba-573eecc00dd5,
-            "budgetItemId": "63166c64f54f0c0dddb5a731",
-            "serviceType": "Instalação",
-            "employee": "Ademir Jorge",
-            "commissionPercent": 10,
-            "amount": 100.00
-            "productionAt": "2022-09-05T21:38:44.212Z",
-            "updatedAt": "2022-09-05T21:38:44.212Z",
-            "createdAt": "2022-09-05T21:38:44.208Z"  
-          },
-          {
-            "id": "9908b8ba-3865-4b12-afba-573eecc0dd5", 
-            "budgetItemId": "63166c64f54f0c0dddb5a731",
-            "serviceType": "Manutenção",
-            "employee": "Ademir Jorge",
-            "commissionPercent": 10,
-            "amount": 100.00
-            "productionAt": "2022-09-05T21:38:44.212Z",
-            "updatedAt": "2022-09-05T21:38:44.212Z",
-            "createdAt": "2022-09-05T21:38:44.208Z"  
-          }
-        ]
-        "updatedAt": "2022-09-05T21:38:44.212Z",
-        "createdAt": "2022-09-05T21:38:44.208Z"
-      },
-      {
-        "budgetId": "63166c64f54f0c0dddb5a730",
-        "id": "63166c64f54f0c0dddb5a731",
-        "itemOrd": 1,
-        "description": "PERGOLADO",
-        "measure": "2400 X 2200",
-        "width": 2400,
-        "height": 2200,
-        "quantity": 1,
-        "amount_unit": 18232.69,
-        "discont": 3732.23,
-        "subTotal": 18232.69,
-        "total": 18232.69,
-        "department": "Glass",
-        "productions": [
-          {
-            "id": "9908b8ba-3865-4b12-afba-573eecc0dd5",          "budgetItemId": "63166c64f54f0c0dddb5a731",
-            "expertArea": "Instalação",
-            "employees": [
-              {
-                "Luiz Carlos"
-              },
-              {
-                "Jhonisson"
-              },
-              {
-                "Aldiney"
-              }
-            ],
-            "commissionPercent": 5,
-            "amount": 100.00
-            "divisionBy": 3,
-            "amountByEmployees": 15.00            
-            "productionAt": "2022-09-05T21:38:44.212Z",
-            "updatedAt": "2022-09-05T21:38:44.212Z",
-            "createdAt": "2022-09-05T21:38:44.208Z"   
-          },          
-        ]
-        "updatedAt": "2022-09-05T21:38:44.212Z",
-        "createdAt": "2022-09-05T21:38:44.208Z"
-      }
-    ]
-  }
-}
-```

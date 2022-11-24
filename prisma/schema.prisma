@@ -101,7 +101,6 @@ model BudgetItem {
   total       Float
   Budget      Budget?  @relation(fields: [budgetId], references: [id])
   budgetId    String?  @db.ObjectId
-  // department  Department?
   updatedAt   DateTime @updatedAt
   createdAt   DateTime @default(now())
 
@@ -122,7 +121,7 @@ model Budget {
   discontPercent      Float
   subTotal            Float
   total               Float
-  itemsCount          Int?
+  itemsCount          Int
   budgetItems         BudgetItem[]
   commissionStatus    CommissionStatus @default(CLOSED)
   statusConstructions String?

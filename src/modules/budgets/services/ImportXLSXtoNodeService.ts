@@ -1,7 +1,7 @@
 import xlsx from 'node-xlsx';
 import path from 'path';
-import Budget from '../entities/Budget';
-import BudgetItem from '../entities/BudgetItem';
+import Budget from '../entities/BudgetEntity';
+import BudgetItem from '../entities/BudgetItemEntity';
 import BudgetItemRepository from '../repositories/BudgetsItemsRepository';
 import BudgetsRepository from '../repositories/BudgetsRepository';
 

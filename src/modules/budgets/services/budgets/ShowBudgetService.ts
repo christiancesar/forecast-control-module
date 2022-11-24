@@ -1,4 +1,4 @@
-import Budget from "../../entities/Budget";
+import Budget from "../../entities/BudgetEntity";
 import BudgetsRepository from "../../repositories/BudgetsRepository"
 
 interface IRequest {
