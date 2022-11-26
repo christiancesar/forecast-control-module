@@ -1,4 +1,4 @@
-import { prisma } from "../../../../prisma";
+import { prisma } from "@shared/database/prisma";
 import BudgetItem from "../entities/BudgetItemEntity";
 import ICreateBudgetItemDTO from "../interfaces/ICreateBudgetItemDTO";
 

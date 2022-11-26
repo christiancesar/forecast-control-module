@@ -1,4 +1,4 @@
-import { prisma } from "../../../../../prisma";
+import { prisma } from "@shared/database/prisma";
 import { ExpertAreaEntity } from "../../entities/ExpertAreaEntity";
 import { CreateExpertAreaDTO, FindExpertAreaByIdDTO, FindExpertAreaByNameDTO, IExpertAreaRepository, UpdateEmployeeDTO } from "../interfaces/IExpertAreasRepository";
 

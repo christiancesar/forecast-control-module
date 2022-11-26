@@ -1,4 +1,4 @@
-import Address from '@modules/address/entities/Address';
+import { AddressEntity } from "@modules/peoples/entities/AddressEntity";
 
 export interface ICreateUserDTO {
   firstName: string;
@@ -6,5 +6,5 @@ export interface ICreateUserDTO {
   phone: string;
   email: string;
   password: string;
-  address?: Address;
+  address?: AddressEntity;
 }

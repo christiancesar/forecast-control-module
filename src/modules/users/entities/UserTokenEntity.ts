@@ -1,4 +1,4 @@
-class UserTokenEntity {
+export class UserTokenEntity {
   id: string;
   token: string;
   userId: string;
@@ -12,7 +12,7 @@ class UserTokenEntity {
     userId,
     expiresIn,
     createdAt,
-    updatedAt
+    updatedAt,
   }: UserTokenEntity) {
     this.id = id;
     this.token = token;

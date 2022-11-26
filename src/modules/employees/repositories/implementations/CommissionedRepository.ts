@@ -1,4 +1,4 @@
-import { prisma } from "../../../../../prisma";
+import { prisma } from "@shared/database/prisma";
 import { CommissionedEntity } from "../../entities/CommissionedEntity";
 import { CreateCommissionedDTO, FindCommissionedByIdDTO, ICommissionedRepository, ShowCommissionedByEmployeeDTO, SoftDeleteCommissionedDTO, UpdateCommissionedDTO } from "../interfaces/ICommissionedRepository";
 

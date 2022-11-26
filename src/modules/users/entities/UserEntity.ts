@@ -8,13 +8,7 @@ class Permission {
   createdAt: Date;
   updatedAt: Date;
 
-  constructor({
-    id,
-    name,
-    isMaterAdmin,
-    createdAt,
-    updatedAt
-  }: Permission) {
+  constructor({ id, name, isMaterAdmin, createdAt, updatedAt }: Permission) {
     this.id = id;
     this.name = name;
     this.isMaterAdmin = isMaterAdmin;
@@ -47,8 +41,8 @@ export class UserEntity {
     permissions,
     userData,
     createdAt,
-    updatedAt
-  }: UserEntity)  {
+    updatedAt,
+  }: UserEntity) {
     this.id = id;
     this.name = name;
     this.email = email;

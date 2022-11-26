@@ -1,4 +1,4 @@
-  export class RefreshTokenEntity {
+export class RefreshTokenEntity {
   id: string;
   userId: string;
   token: string;
@@ -12,7 +12,7 @@
     token,
     isValid,
     createdAt,
-    updatedAt
+    updatedAt,
   }: RefreshTokenEntity) {
     this.id = id;
     this.userId = userId;

@@ -1,7 +1,7 @@
 import { ICreateUserDTO } from '@modules/users/dtos/ICreateUserDTO';
 import IUpdateUserDTO from '@modules/users/dtos/IUpdateUserDTO';
 import { getRepository, In, Repository } from 'typeorm';
-import User from '../../entities/User';
+import { UserEntity } from '../../entities/UserEntity';
 import IUsersRepository from '../interfaces/IUsersRepository';
 
 export default class UsersRepository implements IUsersRepository {

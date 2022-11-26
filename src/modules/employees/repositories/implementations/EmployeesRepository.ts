@@ -1,4 +1,4 @@
-import { prisma } from "../../../../../prisma";
+import { prisma } from "@shared/database/prisma";
 import { CreateEmployeeDTO } from "../../dtos/CreateEmployeeDTO";
 import { CommissionedEntity } from "../../entities/CommissionedEntity";
 import { EmployeeEntity } from "../../entities/EmployeeEntity";

@@ -1,8 +1,8 @@
-import RefreshToken from '@modules/users/entities/RefreshToken';
+import { RefreshTokenEntity } from '@modules/users/entities/RefreshTokenEntity';
 import { getRepository, Repository } from 'typeorm';
 import IRefreshTokenRepository from '../interfaces/IRefreshTokenRepository';
 
-export default class RefreshTokenRepository implements IRefreshTokenRepository {
+export class RefreshTokenRepository implements IRefreshTokenRepository {
   private ormRepository: Repository<RefreshToken>;
 
   constructor() {

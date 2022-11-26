@@ -1,4 +1,4 @@
-import { prisma } from "../../../../../prisma";
+import { prisma } from "@shared/database/prisma";
 import { DepartmentEntity } from "../../entities/DepartmentEntity";
 import { CreateDepartmentDTO, FindDeparmentDTO, IDepartmentsRepository, UpdateDepartmentDTO } from "../interfaces/IDepartmentsRepository";
 

@@ -1,7 +1,7 @@
-import Address from '@modules/address/entities/Address';
-import Company from '@modules/companies/entities/Company';
+import { CompanyEntity } from "@modules/companies/entities/Company";
+import { AddressEntity } from "@modules/peoples/entities/AddressEntity";
 
-export default interface IUpdateUserDTO {
+export interface IUpdateUserDTO {
   userId: string;
   firstName: string;
   lastName: string;
@@ -11,6 +11,6 @@ export default interface IUpdateUserDTO {
   individualTaxNumber: string;
   password: string;
   // avatar: string;
-  address: Address;
-  companies: Company[];
+  address: AddressEntity;
+  companies: CompanyEntity[];
 }
