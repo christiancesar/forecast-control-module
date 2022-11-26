@@ -29,6 +29,7 @@ export class UserEntity {
   email: string;
   password: string;
   avatar?: string;
+  confirmedEmail: boolean;
   company?: CompanyEntity[];
   permissions: Permission[];
   userData?: PeopleEntity;
@@ -40,6 +41,9 @@ export class UserEntity {
     name,
     email,
     password,
+    confirmedEmail,
+    avatar,
+    company,
     permissions,
     userData,
     createdAt,
@@ -49,6 +53,9 @@ export class UserEntity {
     this.name = name;
     this.email = email;
     this.password = password;
+    this.confirmedEmail = confirmedEmail;
+    this.avatar = avatar;
+    this.company = company;
     this.permissions = permissions;
     this.userData = userData;
     this.createdAt = createdAt;

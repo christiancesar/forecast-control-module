@@ -28,7 +28,6 @@ export class PeopleEntity extends PeopleEntityAbstract {
     typePerson,
     fistName,
     lastName,
-    fullName,
     individualTaxIdentification,
     tradingName,
     comapanyName,

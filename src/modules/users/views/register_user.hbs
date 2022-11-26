@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <title>Register</title>
+</head>
+<body>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #F7FAFC;
+      background: #181A22;
+    }
+
+    img{
+      width: 150px;
+    }
+    .content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      width: 600px;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      border: 1px solid #282A36;
+      margin: 0 auto;
+    }
+
+    span {
+      font-weight: bold;
+    }
+
+    .content-buttons {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .resend-mail {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      border: 1px solid #282A36;
+      background: transparent;
+      color: #F2F2F2;
+      text-decoration: none;
+      text-align: center;
+      font-weight: bold;
+      border-radius: 0.25rem;
+      padding: 0.5rem;
+      width: 15rem;
+      height: 2rem;
+      margin-top: 2rem;
+      transition: background-color 4s;
+    }
+
+    .resend-mail:hover {
+      filter: brightness(0.9);
+      border: 1px solid #44EE88;
+      color: #44EE88;
+    }
+
+    .confirm-mail {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      background: #44EE88;
+      color: #181A22;
+      text-decoration: none;
+      text-align: center;
+      font-weight: bold;
+      border-radius: 0.25rem;
+      padding: 0.5rem;
+      width: 15rem;
+      height: 2rem;
+      margin-top: 2rem;
+      transition: background-color 4s;
+    }
+    .confirm-mail:hover{
+      filter: brightness(0.9);
+      color: #F7FAFC;
+    }
+  </style>
+  <div class="container">
+    <section class="content">
+      <header class="forecast-img">
+        <img src="{{appWebUrl}}/logo.svg" alt="Forecast logo">
+      </header>
+      <p><span>Welcome</span> {{firstName}} 👋</p>
+      <p>Ficamos felizes que você está querendo se juntar a nossa família!</p>
+      <br>
+      <p>Mas primeiramente, precisamos que você confirme seu e-mail clicando no botão abaixo, assim validaremos seu cadastro. Está medida é necessária e tem o intuito de mantermos nossa plataforma saudável e segura.</p>
+      <br>
+      <p>A confirmação do e-mail tem um prazo de 24h 🕐, mas não se preocupe seus dados já estão salvos e seguros conosco. Caso ocorra algum erro de confirmação, clique em <span>Re-enviar email</span> que iremos te fornecer um novo token com mais 24h</p>
+
+      <span>Equipe Forecast 🤑</span>
+
+      <div class="content-buttons">
+        <a href="{{linkResend}}"  class="resend-mail">
+          Re-enviar email
+        </a>
+        <a href="{{linkConfirm}}"  class="confirm-mail">
+          Confirmar email
+        </a>
+      </div>
+
+    </section>
+  </div>
+
+</body>
+</html>
