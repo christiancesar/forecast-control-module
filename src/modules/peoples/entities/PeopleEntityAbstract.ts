@@ -2,25 +2,19 @@ import { AddressEntity } from "./AddressEntity";
 
 export class PeopleEntityAbstract {
   id: string;
-  email?: string;
-  phone?: string[] ;
-  note?: string;
-  address?: AddressEntity;
+  email: string | null;
+  phone: string[];
+  note: string | null;
+  addresses: AddressEntity[];
   createdAt: Date;
   updatedAt: Date;
 
-  constructor({
-    id,
-    email,
-    phone,
-    note,
-    address,
-  }: PeopleEntityAbstract) {
+  constructor({ id, email, phone, note, addresses }: PeopleEntityAbstract) {
     this.id = id;
     this.email = email;
     this.phone = phone;
     this.note = note;
-    this.address = address;
+    this.addresses = addresses;
     this.createdAt = new Date();
     this.updatedAt = new Date();
   }

@@ -3,7 +3,6 @@ import { DepartmentEntity } from "../../department/entities/DepartmentEntity";
 
 export class EmployeeEntity {
   id: string;
-  name: string;
   salary: number | null;
   active: boolean;
   commissionedBy: CommissionedEntity[];
@@ -13,16 +12,14 @@ export class EmployeeEntity {
 
   constructor({
     id,
-    name,
     salary,
     active,
     department,
     commissionedBy,
     createdAt,
-    updatedAt
+    updatedAt,
   }: EmployeeEntity) {
     this.id = id;
-    this.name = name;
     this.salary = salary;
     this.commissionedBy = commissionedBy;
     this.active = active;
@@ -30,6 +27,4 @@ export class EmployeeEntity {
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
-
-
 }

@@ -1,23 +1,29 @@
 import { prisma } from "@shared/database/prisma";
 import { CommissionedEntity } from "../../entities/CommissionedEntity";
-import { CreateCommissionedDTO, FindCommissionedByIdDTO, ICommissionedRepository, ShowCommissionedByEmployeeDTO, SoftDeleteCommissionedDTO, UpdateCommissionedDTO } from "../interfaces/ICommissionedRepository";
+import {
+  CreateCommissionedDTO,
+  FindCommissionedByIdDTO,
+  ICommissionedRepository,
+  ShowCommissionedByEmployeeDTO,
+  UpdateCommissionedDTO,
+} from "../interfaces/ICommissionedRepository";
 
 export class CommissionedRepository implements ICommissionedRepository {
   async createCommissioned({
     commissionPercent,
     expertAreaId,
-    employeeId
+    employeeId,
   }: CreateCommissionedDTO): Promise<CommissionedEntity> {
     const commissioned = await prisma.commissioned.create({
       data: {
         commissionPercent,
         employeeId,
-        expertAreaId       
+        expertAreaId,
       },
       include: {
         expertArea: true,
-      }
-    })
+      },
+    });
 
     return {
       id: commissioned.id,
@@ -25,21 +31,21 @@ export class CommissionedRepository implements ICommissionedRepository {
       commissionPercent: commissioned.commissionPercent,
       active: commissioned.active,
       createdAt: commissioned.createdAt,
-      updatedAt: commissioned.updatedAt
+      updatedAt: commissioned.updatedAt,
     };
   }
 
   async findCommissionedById({
-    id
+    id,
   }: FindCommissionedByIdDTO): Promise<CommissionedEntity | null> {
     const commissioned = await prisma.commissioned.findFirst({
       where: {
-        id
+        id,
       },
       include: {
         expertArea: true,
-      }
-    })
+      },
+    });
 
     if (commissioned) {
       return {
@@ -48,54 +54,56 @@ export class CommissionedRepository implements ICommissionedRepository {
         commissionPercent: commissioned.commissionPercent,
         active: commissioned.active,
         createdAt: commissioned.createdAt,
-        updatedAt: commissioned.updatedAt
-      }
+        updatedAt: commissioned.updatedAt,
+      };
     }
 
-    return null
+    return null;
   }
 
   async updateCommissioned({
     id,
     active,
-    commissionPercent
+    commissionPercent,
   }: UpdateCommissionedDTO): Promise<CommissionedEntity> {
     const commissioned = await prisma.commissioned.update({
       where: {
-        id
+        id,
       },
       data: {
         active,
-        commissionPercent
+        commissionPercent,
       },
       include: {
         expertArea: true,
-      }
-    })
+      },
+    });
 
     return commissioned;
   }
 
-  async showCommissionedByEmployee({ employeeId }: ShowCommissionedByEmployeeDTO): Promise<CommissionedEntity[]> {
+  async showCommissionedByEmployee({
+    employeeId,
+  }: ShowCommissionedByEmployeeDTO): Promise<CommissionedEntity[]> {
     const commissioned = await prisma.commissioned.findMany({
       where: {
-        employeeId
+        employeeId,
       },
       include: {
         expertArea: true,
-      }
-    })
+      },
+    });
 
-    const commissionedArray = commissioned.map(com => {
+    const commissionedArray = commissioned.map((com) => {
       return {
         id: com.id,
         expertArea: com.expertArea,
         commissionPercent: com.commissionPercent,
         active: com.active,
         createdAt: com.createdAt,
-        updatedAt: com.updatedAt
-      }
-    })
+        updatedAt: com.updatedAt,
+      };
+    });
 
     return commissionedArray;
   }

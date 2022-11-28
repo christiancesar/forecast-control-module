@@ -3,10 +3,10 @@ import { EmployeeEntity } from "../../employees/entities/EmployeeEntity";
 export class DepartmentEntity {
   id: string;
   name: string;
-  description: string | null
+  description: string | null;
   employees?: EmployeeEntity[];
   commissionType: string;
-  commissionPercent: number | null
+  commissionPercent: number | null;
   active: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -20,7 +20,7 @@ export class DepartmentEntity {
     commissionPercent,
     active,
     createdAt,
-    updatedAt
+    updatedAt,
   }: DepartmentEntity) {
     this.id = id;
     this.name = name;

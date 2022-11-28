@@ -25,8 +25,16 @@ export type ShowCommissionedByEmployeeDTO = {
 };
 
 export interface ICommissionedRepository {
-  createCommissioned(commissioned: CreateCommissionedDTO): Promise<CommissionedEntity>;
-  findCommissionedById(commissioned: FindCommissionedByIdDTO): Promise<CommissionedEntity | null >;
-  updateCommissioned(commissioned: UpdateCommissionedDTO): Promise<CommissionedEntity>;
-  showCommissionedByEmployee(commissioned: ShowCommissionedByEmployeeDTO): Promise<CommissionedEntity[]>;
-};
+  createCommissioned(
+    commissioned: CreateCommissionedDTO
+  ): Promise<CommissionedEntity>;
+  findCommissionedById(
+    commissioned: FindCommissionedByIdDTO
+  ): Promise<CommissionedEntity | null>;
+  updateCommissioned(
+    commissioned: UpdateCommissionedDTO
+  ): Promise<CommissionedEntity>;
+  showCommissionedByEmployee(
+    commissioned: ShowCommissionedByEmployeeDTO
+  ): Promise<CommissionedEntity[]>;
+}

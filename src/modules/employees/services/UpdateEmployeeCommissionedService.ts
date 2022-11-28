@@ -1,5 +1,4 @@
 import { CommissionedEntity } from "../entities/CommissionedEntity";
-import CommissionedRepository from "../repositories/fakes/CommissionedFakeRepository";
 import { ICommissionedRepository } from "../repositories/interfaces/ICommissionedRepository";
 
 type UpdateEmployeeCommissionedParams = {
@@ -9,9 +8,7 @@ type UpdateEmployeeCommissionedParams = {
 };
 
 export class UpdateEmployeeCommissionedService {
-  constructor(
-    private commissionedRepository: ICommissionedRepository
-  ) {}
+  constructor(private commissionedRepository: ICommissionedRepository) {}
 
   async execute({
     id,
@@ -22,7 +19,6 @@ export class UpdateEmployeeCommissionedService {
       id,
       commissionPercent,
       active,
-      
     });
 
     return commissioned;

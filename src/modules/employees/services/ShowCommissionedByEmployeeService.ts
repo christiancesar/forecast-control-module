@@ -11,14 +11,21 @@ export class ShowCommissionedByEmployeeService {
     private employeesRepository: IEmployeesRepository,
     private commissionedRepository: ICommissionedRepository
   ) {}
-  async execute({ employeeId }: ShowCommissionedByEmployeeParams): Promise<CommissionedEntity[]> {
-    const employeeExist = await this.employeesRepository.findEmployeeById({ id: employeeId });
+  async execute({
+    employeeId,
+  }: ShowCommissionedByEmployeeParams): Promise<CommissionedEntity[]> {
+    const employeeExist = await this.employeesRepository.findEmployeeById({
+      id: employeeId,
+    });
 
     if (!employeeExist) {
       throw new Error("Employee not found");
     }
 
-    const commissioned = await this.commissionedRepository.showCommissionedByEmployee({ employeeId });
+    const commissioned =
+      await this.commissionedRepository.showCommissionedByEmployee({
+        employeeId,
+      });
 
     return commissioned;
   }

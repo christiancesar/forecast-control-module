@@ -4,18 +4,17 @@ import { IExpertAreaRepository } from "../../repositories/interfaces/IExpertArea
 type CreateExpertAreaParams = {
   name: string;
   description: string;
-}
+};
 
 export class CreateExpertAreaService {
-  constructor(
-    private expertAreaRepository: IExpertAreaRepository
-  ) { }
+  constructor(private expertAreaRepository: IExpertAreaRepository) {}
 
   async execute({
     name,
-    description
+    description,
   }: CreateExpertAreaParams): Promise<ExpertAreaEntity> {
-    const expertAreaExist = await this.expertAreaRepository.findExpertAreaByName({ name });
+    const expertAreaExist =
+      await this.expertAreaRepository.findExpertAreaByName({ name });
 
     if (expertAreaExist) {
       throw new Error("Expert Area already exists");
@@ -23,7 +22,7 @@ export class CreateExpertAreaService {
 
     const expertArea = await this.expertAreaRepository.createExpertArea({
       name,
-      description
+      description,
     });
 
     return expertArea;

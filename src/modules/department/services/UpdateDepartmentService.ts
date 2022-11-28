@@ -8,12 +8,10 @@ type UpdateDepartmentParams = {
   commissionType: string;
   commissionPercent: number | null;
   active: boolean;
-}
+};
 
 export class UpdateDepartmentService {
-  constructor(
-    private departmentsRepository: IDepartmentsRepository
-  ) { }
+  constructor(private departmentsRepository: IDepartmentsRepository) {}
 
   async execute({
     id,
@@ -23,18 +21,25 @@ export class UpdateDepartmentService {
     commissionPercent,
     description,
   }: UpdateDepartmentParams): Promise<DepartmentEntity> {
-    const departmentExist = await this.departmentsRepository.findDepartmentById({ id });
+    const departmentExist = await this.departmentsRepository.findDepartmentById(
+      { id }
+    );
 
     if (!departmentExist) {
       throw new Error("Department not found");
     }
 
     departmentExist.name = name ? name : departmentExist.name;
-    departmentExist.description = description ? description : departmentExist.description;
+    departmentExist.description = description
+      ? description
+      : departmentExist.description;
     departmentExist.active = active ? active : departmentExist.active;
-    departmentExist.commissionType = commissionType ? commissionType : departmentExist.commissionType;
-    departmentExist.commissionPercent = commissionPercent ? commissionPercent : departmentExist.commissionPercent;
-
+    departmentExist.commissionType = commissionType
+      ? commissionType
+      : departmentExist.commissionType;
+    departmentExist.commissionPercent = commissionPercent
+      ? commissionPercent
+      : departmentExist.commissionPercent;
 
     const department = await this.departmentsRepository.updateDepartment({
       id,
@@ -42,7 +47,7 @@ export class UpdateDepartmentService {
       commissionType,
       name,
       commissionPercent,
-      description,      
+      description,
     });
 
     return department;

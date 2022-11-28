@@ -7,21 +7,25 @@ export type CreateExpertAreaDTO = {
 
 export type FindExpertAreaByNameDTO = {
   name: string;
-}
+};
 
 export type FindExpertAreaByIdDTO = {
   id: string;
-}
+};
 
-export type UpdateEmployeeDTO = {
+export type UpdateExpertAreaDTO = {
   id: string;
   name: string;
-}
+};
 
 export interface IExpertAreaRepository {
   createExpertArea(data: CreateExpertAreaDTO): Promise<ExpertAreaEntity>;
-  findExpertAreaById(data: FindExpertAreaByIdDTO): Promise<ExpertAreaEntity | null>;
-  findExpertAreaByName(data: FindExpertAreaByNameDTO): Promise<ExpertAreaEntity | null>;
+  findExpertAreaById(
+    data: FindExpertAreaByIdDTO
+  ): Promise<ExpertAreaEntity | null>;
+  findExpertAreaByName(
+    data: FindExpertAreaByNameDTO
+  ): Promise<ExpertAreaEntity | null>;
   findAllExpertAreas(): Promise<ExpertAreaEntity[]>;
-  updateExpertArea(data: UpdateEmployeeDTO): Promise<ExpertAreaEntity>;
+  updateExpertArea(data: UpdateExpertAreaDTO): Promise<ExpertAreaEntity>;
 }

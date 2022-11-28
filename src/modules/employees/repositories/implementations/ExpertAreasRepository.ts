@@ -1,41 +1,48 @@
 import { prisma } from "@shared/database/prisma";
 import { ExpertAreaEntity } from "../../entities/ExpertAreaEntity";
-import { CreateExpertAreaDTO, FindExpertAreaByIdDTO, FindExpertAreaByNameDTO, IExpertAreaRepository, UpdateEmployeeDTO } from "../interfaces/IExpertAreasRepository";
+import {
+  CreateExpertAreaDTO,
+  FindExpertAreaByIdDTO,
+  FindExpertAreaByNameDTO,
+  IExpertAreaRepository,
+  UpdateExpertAreaDTO,
+} from "../interfaces/IExpertAreasRepository";
 
 export class ExpertAreasRepository implements IExpertAreaRepository {
-
   async createExpertArea({
     name,
-    description
+    description,
   }: CreateExpertAreaDTO): Promise<ExpertAreaEntity> {
     const expertArea = await prisma.expertArea.create({
       data: {
         name,
         description,
-      }
-    })
+      },
+    });
 
     return expertArea;
   }
 
-  async findExpertAreaById({ id }: FindExpertAreaByIdDTO): Promise<ExpertAreaEntity | null> {
+  async findExpertAreaById({
+    id,
+  }: FindExpertAreaByIdDTO): Promise<ExpertAreaEntity | null> {
     const expertArea = await prisma.expertArea.findFirst({
       where: {
-        id
-      }
-    })
+        id,
+      },
+    });
 
     return expertArea;
   }
 
   async findExpertAreaByName({
-    name
+    name,
   }: FindExpertAreaByNameDTO): Promise<ExpertAreaEntity | null> {
     const expertArea = await prisma.expertArea.findUnique({
       where: {
-        name
-      }
-    })
+        name,
+      },
+    });
 
     return expertArea;
   }
@@ -48,18 +55,17 @@ export class ExpertAreasRepository implements IExpertAreaRepository {
 
   async updateExpertArea({
     id,
-    name
-  }: UpdateEmployeeDTO): Promise<ExpertAreaEntity> {
+    name,
+  }: UpdateExpertAreaDTO): Promise<ExpertAreaEntity> {
     const expertArea = await prisma.expertArea.update({
       where: {
-        id
+        id,
       },
       data: {
-        name
-      }
-    })
+        name,
+      },
+    });
 
     return expertArea;
   }
-
 }

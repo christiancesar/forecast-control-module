@@ -1,4 +1,3 @@
-
 import cors from "cors";
 import express from "express";
 import { prisma } from "@shared/database/prisma";
@@ -14,8 +13,7 @@ app.use(express.json());
 app.use(routes);
 
 app.listen(3000, async () => {
-	await prisma.$connect();
-	console.log("Control started on port 3000🚀 ");
-	// importXLSXtoNodeService.execute();
-}
-);
+  await prisma.$connect();
+  console.log("Control started on port 3000🚀 ");
+  // importXLSXtoNodeService.execute();
+});

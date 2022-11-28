@@ -1,4 +1,3 @@
-import DepartmentRepository from "../../../department/repositories/fakes/DepartmentsFakeRepository";
 import { IDepartmentsRepository } from "../../../department/repositories/interfaces/IDepartmentsRepository";
 import { EmployeeEntity } from "../../entities/EmployeeEntity";
 import { IEmployeesRepository } from "../../repositories/interfaces/IEmployeesRepository";
@@ -13,20 +12,24 @@ export default class CreateEmployeeService {
   constructor(
     private departmentRepository: IDepartmentsRepository,
     private employeesRepository: IEmployeesRepository
-  ) { }
+  ) {}
 
   async execute({
     name,
     salary,
     departmentId,
   }: CreateEmployeeServiceParams): Promise<EmployeeEntity> {
-    const departmentExist = await this.departmentRepository.findDepartmentById({ id: departmentId });
-    
+    const departmentExist = await this.departmentRepository.findDepartmentById({
+      id: departmentId,
+    });
+
     if (!departmentExist) {
       throw new Error("Department not found");
     }
 
-    const employeeNameExist = await this.employeesRepository.findEmployeeByName({ name });
+    const employeeNameExist = await this.employeesRepository.findEmployeeByName(
+      { name }
+    );
 
     if (employeeNameExist) {
       throw new Error("Employee name already exist");
@@ -35,9 +38,9 @@ export default class CreateEmployeeService {
     const employee = await this.employeesRepository.createEmployee({
       name,
       salary,
-      departmentId
+      departmentId,
     });
 
-    return employee
+    return employee;
   }
 }

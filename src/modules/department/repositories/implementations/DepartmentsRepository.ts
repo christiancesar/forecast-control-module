@@ -1,13 +1,18 @@
 import { prisma } from "@shared/database/prisma";
 import { DepartmentEntity } from "../../entities/DepartmentEntity";
-import { CreateDepartmentDTO, FindDeparmentDTO, IDepartmentsRepository, UpdateDepartmentDTO } from "../interfaces/IDepartmentsRepository";
+import {
+  CreateDepartmentDTO,
+  FindDeparmentDTO,
+  IDepartmentsRepository,
+  UpdateDepartmentDTO,
+} from "../interfaces/IDepartmentsRepository";
 
 export class DepartmentsRepository implements IDepartmentsRepository {
   async createDepartment({
     name,
     commissionType,
     commissionPercent,
-    description
+    description,
   }: CreateDepartmentDTO): Promise<DepartmentEntity> {
     const department = await prisma.department.create({
       data: {
@@ -15,34 +20,36 @@ export class DepartmentsRepository implements IDepartmentsRepository {
         description,
         commissionType,
         commissionPercent,
-      }
+      },
     });
 
     return department;
   }
-  
+
   async listDepartments(): Promise<DepartmentEntity[]> {
     const departments = await prisma.department.findMany();
     return departments;
   }
 
-  async findDepartmentById({id}: FindDeparmentDTO): Promise<DepartmentEntity | null> {
+  async findDepartmentById({
+    id,
+  }: FindDeparmentDTO): Promise<DepartmentEntity | null> {
     const department = await prisma.department.findUnique({
       where: {
-        id
-      }
+        id,
+      },
     });
 
-    return department
+    return department;
   }
-  
+
   async updateDepartment({
     id,
     name,
     description,
     commissionType,
     commissionPercent,
-    active
+    active,
   }: UpdateDepartmentDTO): Promise<DepartmentEntity> {
     const departmentUpdated = await prisma.department.update({
       data: {
@@ -50,11 +57,11 @@ export class DepartmentsRepository implements IDepartmentsRepository {
         description,
         commissionType,
         commissionPercent,
-        active
+        active,
       },
       where: {
-        id
-      }
+        id,
+      },
     });
 
     return departmentUpdated;

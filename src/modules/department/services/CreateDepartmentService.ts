@@ -7,28 +7,26 @@ type CreateDepartmentParams = {
   description: string;
   commissionPercent: number | null;
   commissionType: CommissionTypeEnum;
-}
+};
 
 export class CreateDepartmentService {
-  constructor(
-    private departmentsRepository: IDepartmentsRepository
-  ) {}
+  constructor(private departmentsRepository: IDepartmentsRepository) {}
 
   async execute({
     name,
     description,
     commissionType,
-    commissionPercent
+    commissionPercent,
   }: CreateDepartmentParams): Promise<DepartmentEntity> {
     let commissionTypeExist: CommissionTypeEnum;
 
     switch (commissionType) {
-      case 'individual':
+      case "individual":
         commissionTypeExist = CommissionTypeEnum.individual;
-      break;
-      case 'group':
+        break;
+      case "group":
         commissionTypeExist = CommissionTypeEnum.group;
-      break;
+        break;
       default:
         throw new Error("Commission type not found");
     }
@@ -37,8 +35,8 @@ export class CreateDepartmentService {
       name,
       description,
       commissionType,
-      commissionPercent
+      commissionPercent,
     });
-    return department
+    return department;
   }
 }

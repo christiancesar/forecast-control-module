@@ -1,27 +1,26 @@
 import { EmployeeEntity } from "../../employees/entities/EmployeeEntity";
 import { PeopleEntityAbstract } from "./PeopleEntityAbstract";
-import { TypePerson } from "./TypePersonEnum";
 
 // Clientes, Forncedores, Funcionários
 
-export class PeopleEntity extends PeopleEntityAbstract { 
-  typePerson: TypePerson | string; //Pessoa Fisica ou Juridica
-  
+export class PeopleEntity extends PeopleEntityAbstract {
+  typePerson: string; //Pessoa Fisica ou Juridica
+
   fistName: string;
   lastName: string;
   fullName: string;
-  individualTaxIdentification: string; //CPF(ITIN)
+  individualTaxIdentification: string | null; //CPF(ITIN)
 
   tradingName: string; //Nome Fantasia
   comapanyName: string; //Razão Social
-  stateRegistration: string; //Inscrição Estadual
-  employerIdentificationNumber: string; //CNPJ (EIN)
+  stateRegistration: string | null; //Inscrição Estadual
+  employerIdentificationNumber: string | null; //CNPJ (EIN)
 
   isCustomer: boolean;
   isSupplier: boolean;
   isEmployee: boolean;
 
-  employee?: EmployeeEntity;
+  employee: EmployeeEntity | null;
 
   constructor({
     id,
@@ -33,7 +32,7 @@ export class PeopleEntity extends PeopleEntityAbstract {
     comapanyName,
     email,
     phone,
-    address,
+    addresses,
     note,
     stateRegistration,
     employerIdentificationNumber,
@@ -42,9 +41,9 @@ export class PeopleEntity extends PeopleEntityAbstract {
     isEmployee,
     employee,
     createdAt,
-    updatedAt
+    updatedAt,
   }: PeopleEntity) {
-    super({id, email, phone, note, address, createdAt, updatedAt});
+    super({ id, email, phone, note, addresses, createdAt, updatedAt });
 
     this.typePerson = typePerson;
     this.fistName = fistName;

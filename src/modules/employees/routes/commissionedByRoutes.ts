@@ -8,5 +8,4 @@ commissionedByRoutes.post("/", employeeCommissioedController.create);
 commissionedByRoutes.get("/", employeeCommissioedController.show);
 commissionedByRoutes.patch("/update/:id", employeeCommissioedController.update);
 
-
 export default commissionedByRoutes;

@@ -6,14 +6,16 @@ type ShowExpertAreaServiceParams = {
 };
 
 export class ShowExpertAreaService {
-  constructor(
-    private expertAreaRepository: IExpertAreaRepository
-  ) {}
-  async execute({ id }: ShowExpertAreaServiceParams): Promise<ExpertAreaEntity> {
-    const expertArea = await this.expertAreaRepository.findExpertAreaById({ id });
+  constructor(private expertAreaRepository: IExpertAreaRepository) {}
+  async execute({
+    id,
+  }: ShowExpertAreaServiceParams): Promise<ExpertAreaEntity> {
+    const expertArea = await this.expertAreaRepository.findExpertAreaById({
+      id,
+    });
 
     if (!expertArea) {
-      throw new Error('Expert Area not found');
+      throw new Error("Expert Area not found");
     }
 
     return expertArea;
