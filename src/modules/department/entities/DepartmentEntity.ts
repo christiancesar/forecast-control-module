@@ -5,7 +5,7 @@ export class DepartmentEntity {
   name: string;
   description: string | null;
   employees?: EmployeeEntity[];
-  commissionType: string;
+  commissionType: string | null;
   commissionPercent: number | null;
   active: boolean;
   createdAt: Date;

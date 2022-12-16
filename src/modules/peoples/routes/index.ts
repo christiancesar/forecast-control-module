@@ -7,6 +7,7 @@ const peopleController = new PeopleController();
 
 peopleRoutes.post("/", peopleController.create);
 peopleRoutes.get("/:id", peopleController.show);
+peopleRoutes.get("/", peopleController.list);
 
 peopleRoutes.use("/addresses", addressesRoutes);
 

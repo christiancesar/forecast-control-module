@@ -1,9 +1,10 @@
+import { IPeopleRepository } from "@modules/peoples/repositories/PeopleRepository";
 import { IDepartmentsRepository } from "../../../department/repositories/interfaces/IDepartmentsRepository";
 import { EmployeeEntity } from "../../entities/EmployeeEntity";
 import { IEmployeesRepository } from "../../repositories/interfaces/IEmployeesRepository";
 
 type CreateEmployeeServiceParams = {
-  name: string;
+  peopleId: string;
   salary: number;
   departmentId: string;
 };
@@ -11,11 +12,12 @@ type CreateEmployeeServiceParams = {
 export default class CreateEmployeeService {
   constructor(
     private departmentRepository: IDepartmentsRepository,
-    private employeesRepository: IEmployeesRepository
+    private employeesRepository: IEmployeesRepository,
+    private peopleRepository: IPeopleRepository
   ) {}
 
   async execute({
-    name,
+    peopleId,
     salary,
     departmentId,
   }: CreateEmployeeServiceParams): Promise<EmployeeEntity> {
@@ -27,16 +29,16 @@ export default class CreateEmployeeService {
       throw new Error("Department not found");
     }
 
-    const employeeNameExist = await this.employeesRepository.findEmployeeByName(
-      { name }
-    );
+    const peopleExist = await this.peopleRepository.findPeopleById({
+      id: peopleId,
+    });
 
-    if (employeeNameExist) {
-      throw new Error("Employee name already exist");
+    if (!peopleExist) {
+      throw new Error("People not found");
     }
 
     const employee = await this.employeesRepository.createEmployee({
-      name,
+      peopleId,
       salary,
       departmentId,
     });

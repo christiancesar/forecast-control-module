@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import { PeopleRepository } from "../repositories/PeopleRepository";
 import { CreatePeopleService } from "../services/people/CreatePeopleService";
+import { ListPeoplesService } from "../services/people/ListPeoplesService";
+import { ShowPeopleService } from "../services/people/ShowPeopleService";
+import PeopleViewMapper from "./mappers/PeopleViewMapper";
 
 type PeopleCreateRequest = {
   email: string | null;
@@ -67,8 +70,18 @@ export class PeopleController {
     const { id } = request.params;
 
     const peopleRepository = new PeopleRepository();
-    const people = await peopleRepository.findPeopleById({ id });
+    const showPeopleService = new ShowPeopleService(peopleRepository);
+    const people = await showPeopleService.execute({ peopleId: id });
 
-    return response.json(people);
+    return response.json(PeopleViewMapper.toView(people));
+  }
+
+  async list(request: Request, response: Response): Promise<Response> {
+    const peopleRepository = new PeopleRepository();
+    const listPeoplesService = new ListPeoplesService(peopleRepository);
+
+    const peoples = await listPeoplesService.execute();
+
+    return response.json(peoples.map(PeopleViewMapper.toView));
   }
 }

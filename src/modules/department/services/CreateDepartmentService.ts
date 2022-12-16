@@ -27,6 +27,9 @@ export class CreateDepartmentService {
       case "group":
         commissionTypeExist = CommissionTypeEnum.group;
         break;
+      case "none":
+        commissionTypeExist = CommissionTypeEnum.none;
+        break;
       default:
         throw new Error("Commission type not found");
     }

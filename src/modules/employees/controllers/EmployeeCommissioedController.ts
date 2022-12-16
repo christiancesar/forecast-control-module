@@ -13,21 +13,21 @@ export class EmployeeCommissioedController {
     const employeesRepository = new EmployeesRepository();
     const commissionedRepository = new CommissionedRepository();
     const expertAreaRepository = new ExpertAreasRepository();
-    
-    const createEmployeeCommissionedService = new CreateEmployeeCommissionedService(
-      expertAreaRepository,
-      commissionedRepository,
-      employeesRepository
-    );
+
+    const createEmployeeCommissionedService =
+      new CreateEmployeeCommissionedService(
+        expertAreaRepository,
+        commissionedRepository,
+        employeesRepository
+      );
 
     const employee = await createEmployeeCommissionedService.execute({
       employeeId,
       expertAreaId,
-      commissionPercent
-    })
+      commissionPercent,
+    });
 
     return response.json(employee);
-
   }
 
   async show(request: Request, response: Response): Promise<Response> {
@@ -35,12 +35,15 @@ export class EmployeeCommissioedController {
 
     const employeesRepository = new EmployeesRepository();
     const commissionedRepository = new CommissionedRepository();
-    const showCommissionedByEmployeeService = new ShowCommissionedByEmployeeService(
-      employeesRepository, 
-      commissionedRepository
-    );
+    const showCommissionedByEmployeeService =
+      new ShowCommissionedByEmployeeService(
+        employeesRepository,
+        commissionedRepository
+      );
 
-    const commissioned = await showCommissionedByEmployeeService.execute({ employeeId });
+    const commissioned = await showCommissionedByEmployeeService.execute({
+      employeeId,
+    });
 
     return response.json(commissioned);
   }
@@ -50,9 +53,14 @@ export class EmployeeCommissioedController {
     const { commissionPercent, active } = request.body;
 
     const commissionedRepository = new CommissionedRepository();
-    const updateEmployeeCommissionedService = new UpdateEmployeeCommissionedService(commissionedRepository);
+    const updateEmployeeCommissionedService =
+      new UpdateEmployeeCommissionedService(commissionedRepository);
 
-    const employee = await updateEmployeeCommissionedService.execute({ id, commissionPercent, active });
+    const employee = await updateEmployeeCommissionedService.execute({
+      id,
+      commissionPercent,
+      active,
+    });
 
     return response.json(employee);
   }

@@ -1,3 +1,4 @@
+import { CompanyEntity } from "@modules/companies/entities/Company";
 import { EmployeeEntity } from "../../employees/entities/EmployeeEntity";
 import { PeopleEntityAbstract } from "./PeopleEntityAbstract";
 
@@ -20,7 +21,7 @@ export class PeopleEntity extends PeopleEntityAbstract {
   isSupplier: boolean;
   isEmployee: boolean;
 
-  employee: EmployeeEntity | null;
+  employee?: EmployeeEntity | null;
 
   constructor({
     id,

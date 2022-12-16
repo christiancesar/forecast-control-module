@@ -22,7 +22,4 @@ export interface IEmployeesRepository {
   updateEmployee(employee: UpdateEmployeeDTO): Promise<EmployeeEntity>;
   findEmployeeById(employee: FindEmployeeDTO): Promise<EmployeeEntity | null>;
   findAllEmployees(): Promise<EmployeeEntity[]>;
-  findEmployeeByName(
-    employee: FindEmployeeByNameDTO
-  ): Promise<EmployeeEntity | null>;
 }

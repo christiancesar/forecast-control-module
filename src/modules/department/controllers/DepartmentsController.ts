@@ -6,13 +6,14 @@ import { ShowDepartmentService } from "../services/ShowDepartmentService";
 import { UpdateDepartmentService } from "../services/UpdateDepartmentService";
 
 export class DepartmentsController {
-  constructor() { }
-
   async create(request: Request, response: Response): Promise<Response> {
-    const { name, description, commissionPercent, commissionType } = request.body;
-    
+    const { name, description, commissionPercent, commissionType } =
+      request.body;
+
     const departmentRepository = new DepartmentsRepository();
-    const createDepartmentService = new CreateDepartmentService(departmentRepository);
+    const createDepartmentService = new CreateDepartmentService(
+      departmentRepository
+    );
 
     const department = await createDepartmentService.execute({
       name,
@@ -26,19 +27,22 @@ export class DepartmentsController {
 
   async list(request: Request, response: Response): Promise<Response> {
     const departmentRepository = new DepartmentsRepository();
-    const listDepartmentService = new ListDepartmentService(departmentRepository);
+    const listDepartmentService = new ListDepartmentService(
+      departmentRepository
+    );
 
     const department = await listDepartmentService.execute();
 
     return response.json(department);
-
   }
 
   async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
     const departmentRepository = new DepartmentsRepository();
-    const showDepartmentService = new ShowDepartmentService(departmentRepository);
+    const showDepartmentService = new ShowDepartmentService(
+      departmentRepository
+    );
 
     const department = await showDepartmentService.execute({ id });
 
@@ -47,10 +51,13 @@ export class DepartmentsController {
 
   async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-    const { name, description, commissionPercent, commissionType, active } = request.body;
-    
+    const { name, description, commissionPercent, commissionType, active } =
+      request.body;
+
     const departmentRepository = new DepartmentsRepository();
-    const updateDepartmentService = new UpdateDepartmentService(departmentRepository);
+    const updateDepartmentService = new UpdateDepartmentService(
+      departmentRepository
+    );
 
     const department = await updateDepartmentService.execute({
       id,

@@ -1,5 +1,6 @@
 import { prisma } from "@shared/database/prisma";
 import { PeopleEntity } from "../entities/PeopleEntity";
+import PrismaPeopleMapper from "./mappers/PrismaPeopleMapper";
 
 type CreatePeopleDTO = {
   email: string | null;
@@ -35,11 +36,30 @@ type UpdatePeopleAddressesDTO = {
 export interface IPeopleRepository {
   createUser(people: CreatePeopleDTO): Promise<PeopleEntity>;
   findPeopleById(people: ShowPeopleDTO): Promise<PeopleEntity | null>;
-
+  listAllPeoples(): Promise<PeopleEntity[]>;
   updatePeopleAddresses(
     peopleAdresses: UpdatePeopleAddressesDTO
   ): Promise<PeopleEntity>;
 }
+
+const peopleInclude = {
+  addresses: true,
+  employee: {
+    include: {
+      commissionedBy: {
+        include: {
+          expertArea: true,
+        },
+      },
+      department: {
+        include: {
+          employees: false,
+        },
+      },
+      people: false,
+    },
+  },
+};
 
 export class PeopleRepository implements IPeopleRepository {
   async findPeopleById({ id }: ShowPeopleDTO): Promise<PeopleEntity | null> {
@@ -47,79 +67,27 @@ export class PeopleRepository implements IPeopleRepository {
       where: {
         id,
       },
-      include: {
-        addresses: true,
-        employee: {
-          include: {
-            commissionedBy: {
-              include: {
-                expertArea: true,
-              },
-            },
-            department: true,
-            people: true,
-          },
-        },
-        company: true,
-      },
+      include: peopleInclude,
     });
 
-    return people;
+    return PrismaPeopleMapper.toDomain(people);
   }
 
-  async createUser({
-    email,
-    phone,
-    note,
-    typePerson,
-    fistName,
-    lastName,
-    fullName,
-    individualTaxIdentification,
-    tradingName,
-    comapanyName,
-    stateRegistration,
-    employerIdentificationNumber,
-    isCustomer,
-    isSupplier,
-    isEmployee,
-  }: CreatePeopleDTO): Promise<PeopleEntity> {
+  async createUser(peopleData: CreatePeopleDTO): Promise<PeopleEntity> {
     const people = await prisma.people.create({
-      data: {
-        typePerson,
-        fistName,
-        lastName,
-        fullName,
-        individualTaxIdentification,
-        comapanyName,
-        tradingName,
-        employerIdentificationNumber,
-        stateRegistration,
-        email,
-        note,
-        phone,
-        isCustomer,
-        isEmployee,
-        isSupplier,
-      },
-      include: {
-        addresses: true,
-        employee: {
-          include: {
-            commissionedBy: {
-              include: {
-                expertArea: true,
-              },
-            },
-            department: true,
-            people: true,
-          },
-        },
-        company: true,
-      },
+      data: peopleData,
+      include: peopleInclude,
     });
 
-    return people;
+    return PrismaPeopleMapper.toDomain(people)!;
+  }
+
+  async listAllPeoples(): Promise<PeopleEntity[]> {
+    const peoples = await prisma.people.findMany({
+      include: peopleInclude,
+    });
+
+    return peoples.map((people) => PrismaPeopleMapper.toDomain(people)!);
   }
 
   async updatePeopleAddresses({
@@ -137,23 +105,9 @@ export class PeopleRepository implements IPeopleRepository {
           },
         },
       },
-      include: {
-        addresses: true,
-        employee: {
-          include: {
-            commissionedBy: {
-              include: {
-                expertArea: true,
-              },
-            },
-            department: true,
-            people: true,
-          },
-        },
-        company: true,
-      },
+      include: peopleInclude,
     });
 
-    return people;
+    return PrismaPeopleMapper.toDomain(people)!;
   }
 }

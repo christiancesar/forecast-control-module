@@ -1,7 +1,5 @@
-import { DepartmentEntity } from "../../department/entities/DepartmentEntity";
-
 export type CreateEmployeeDTO = {
-  name: string;
+  peopleId: string;
   salary: number | null;
   departmentId: string;
-}
+};

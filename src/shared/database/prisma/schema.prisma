@@ -15,7 +15,7 @@ model Department {
   name              String     @unique
   description       String?
   commissionPercent Float?     @default(0)
-  commissionType    String
+  commissionType    String?
   active            Boolean    @default(true)
   employees         Employee[]
   updatedAt         DateTime   @updatedAt
@@ -58,8 +58,8 @@ model Employee {
   department     Department?    @relation(fields: [departmentId], references: [id])
   departmentId   String?        @db.ObjectId
 
-  people   People? @relation(fields: [peopleId], references: [id])
-  peopleId String? @unique @db.ObjectId
+  people   People @relation(fields: [peopleId], references: [id])
+  peopleId String @unique @db.ObjectId
 
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
