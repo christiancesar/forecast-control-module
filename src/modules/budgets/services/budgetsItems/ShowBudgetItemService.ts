@@ -7,7 +7,7 @@ interface IRequest {
 
 export default class ShowBudgetItemService {
   async execute({ budgetItemId }: IRequest): Promise<BudgetItem | undefined> {
-    const budgetItem = await BudgetsItemsRepository.findById(budgetItemId)
+    const budgetItem = await BudgetsItemsRepository.findById(budgetItemId);
     return budgetItem;
   }
 }

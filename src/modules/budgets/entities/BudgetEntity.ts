@@ -1,8 +1,14 @@
-import { randomUUID } from 'crypto';
-import BudgetItem from './BudgetItemEntity';
+import { randomUUID } from "crypto";
+import BudgetItem from "./BudgetItemEntity";
 
+export enum CommissionStatusEnum {
+  OPEN = "OPEN",
+  CLOSED = "CLOSED",
+}
 export default class BudgetEntity {
   id: string;
+  commissionStatus: CommissionStatusEnum;
+  companyId?: string | null;
   shortId: number;
   customer: string;
   saller?: string | null;
@@ -23,10 +29,14 @@ export default class BudgetEntity {
     discontPercent,
     subTotal,
     total,
-    itemsCount,    
+    itemsCount,
+    commissionStatus,
+    companyId,
   }: BudgetEntity) {
     this.id = randomUUID();
     this.shortId = shortId;
+    this.commissionStatus = commissionStatus;
+    this.companyId = companyId;
     this.customer = customer;
     this.saller = saller;
     this.discont = discont;

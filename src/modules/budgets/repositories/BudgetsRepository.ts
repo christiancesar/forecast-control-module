@@ -1,17 +1,34 @@
 import { prisma } from "@shared/database/prisma";
-import Budget from "../entities/BudgetEntity";
-import ICreateBudgetDTO from "../interfaces/ICreateBudgetDTO";
+import BudgetEntity from "../entities/BudgetEntity";
+import { CreateBudgetDTO } from "../interfaces/ICreateBudgetDTO";
+import PrismaBudgetMapper from "./mappers/PrismaBudgetMapper";
+
+type UpdateBudgetDTO = {
+  id: string;
+  shortId: number;
+  customer: string;
+  saller?: string | null;
+  discont: number;
+  discontPercent: number;
+  subTotal: number;
+  total: number;
+  itemsCount: number;
+  updatedAt: Date;
+  createdAt: Date;
+};
+
+type FindBudgetById = {
+  id: string;
+};
 
 interface IBudgetsRepository {
-  create(data: ICreateBudgetDTO): Promise<Budget>;
-  update(budget: Budget): Promise<Budget>;
-  findById(budgetId: string): Promise<Budget | null>;
-  findAllBudgets(): Promise<Budget[]>;
+  create(data: CreateBudgetDTO): Promise<BudgetEntity>;
+  update(budget: UpdateBudgetDTO): Promise<BudgetEntity>;
+  findBudgetById(budget: FindBudgetById): Promise<BudgetEntity | null>;
+  findAllBudgets(): Promise<BudgetEntity[]>;
 }
 
-
 export default class BudgetsRepository implements IBudgetsRepository {
-
   async create({
     shortId,
     customer,
@@ -21,9 +38,9 @@ export default class BudgetsRepository implements IBudgetsRepository {
     subTotal,
     total,
     itemsCount,
-    budgetItems
-  }: ICreateBudgetDTO): Promise<Budget> {
-    const budgetCreated = await prisma.budget.create({
+    budgetItems,
+  }: CreateBudgetDTO): Promise<BudgetEntity> {
+    const budget = await prisma.budget.create({
       data: {
         shortId,
         customer,
@@ -34,46 +51,55 @@ export default class BudgetsRepository implements IBudgetsRepository {
         total,
         itemsCount,
         budgetItems: {
-          create: budgetItems
-        }
+          create: budgetItems,
+        },
       },
       include: {
-        budgetItems: true
-      }
-    })
+        budgetItems: true,
+      },
+    });
 
-    return budgetCreated
+    return PrismaBudgetMapper.toDomain(budget);
   }
-  async update(budget: Budget): Promise<Budget> {
+
+  async update(budget: BudgetEntity): Promise<BudgetEntity> {
     const budgetUpdated = await prisma.budget.update({
-      data: budget,
+      data: PrismaBudgetMapper.toPrisma(budget),
       where: {
         id: budget.id,
       },
       include: {
-        budgetItems: true
-      }
-    })
-    
-    return budgetUpdated
-  }
-  async findById(budgetId: string): Promise<Budget | null> {
-    const budget = await prisma.budget.findFirst({
-      where: {
-        id: budgetId
+        budgetItems: true,
       },
-      include: {
-        budgetItems: true
-      }
     });
-    return budget
+
+    return PrismaBudgetMapper.toDomain(budgetUpdated);
   }
 
-  async findAllBudgets(): Promise<Budget[]> {
-    return prisma.budget.findMany({
+  async findBudgetById(budget: FindBudgetById): Promise<BudgetEntity | null> {
+    const budgetFinded = await prisma.budget.findFirst({
+      where: {
+        id: budget.id,
+      },
       include: {
-        budgetItems: true
-      }
+        budgetItems: true,
+      },
     });
+
+    if (!budgetFinded) {
+      return null;
+    }
+
+    return PrismaBudgetMapper.toDomain(budgetFinded);
+  }
+
+  async findAllBudgets(): Promise<BudgetEntity[]> {
+    const budgets = await prisma.budget.findMany({
+      include: {
+        budgetItems: true,
+      },
+    });
+
+    return budgets.map((budget) => PrismaBudgetMapper.toDomain(budget));
   }
 }

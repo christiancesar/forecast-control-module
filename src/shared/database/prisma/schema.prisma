@@ -116,22 +116,21 @@ enum CommissionStatus {
 }
 
 model Budget {
-  id                  String           @id @default(auto()) @map("_id") @db.ObjectId
-  shortId             Int
-  customer            String
-  saller              String?
-  discont             Float
-  discontPercent      Float
-  subTotal            Float
-  total               Float
-  itemsCount          Int
-  budgetItems         BudgetItem[]
-  commissionStatus    CommissionStatus @default(CLOSED)
-  statusConstructions String?
-  updatedAt           DateTime         @updatedAt
-  createdAt           DateTime         @default(now())
-  Company             Company?         @relation(fields: [companyId], references: [id])
-  companyId           String?          @db.ObjectId
+  id               String           @id @default(auto()) @map("_id") @db.ObjectId
+  shortId          Int
+  customer         String
+  saller           String?
+  discont          Float
+  discontPercent   Float
+  subTotal         Float
+  total            Float
+  itemsCount       Int
+  budgetItems      BudgetItem[]
+  commissionStatus CommissionStatus @default(CLOSED)
+  updatedAt        DateTime         @updatedAt
+  createdAt        DateTime         @default(now())
+  Company          Company?         @relation(fields: [companyId], references: [id])
+  companyId        String?          @db.ObjectId
 
   @@map("budgets")
 }
