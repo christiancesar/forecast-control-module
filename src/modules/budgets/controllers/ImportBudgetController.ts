@@ -1,5 +1,5 @@
-import { NextFunction, Request, Response } from 'express';
-import ImportBudgetService from '../services/ImportBudgetService';
+import { NextFunction, Request, Response } from "express";
+import ImportBudgetService from "../services/ImportBudgetService";
 
 interface IRequest {
   shortId: string;
@@ -12,15 +12,10 @@ interface IRequest {
 
 export default class ImportBudgetController {
   async create(request: Request, response: Response, next: NextFunction) {
-    const { shortId,
-      customer,
-      saller,
-      discont,
-      subTotal,
-      total,
-    } = request.body as IRequest
+    const { shortId, customer, saller, discont, subTotal, total } =
+      request.body as IRequest;
 
-    const importBudgetService = new ImportBudgetService()
+    const importBudgetService = new ImportBudgetService();
 
     const budget = await importBudgetService.execute({
       shortId,
@@ -30,8 +25,8 @@ export default class ImportBudgetController {
       subTotal,
       total,
       file: request.file!.path,
-    })
+    });
 
-    return response.json(budget)
+    return response.json(budget);
   }
 }

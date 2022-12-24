@@ -1,9 +1,8 @@
-
-import { parse } from 'csv-parse';
-import fs from 'fs';
-import Budget from '../interfaces/ICreateBudgetDTO';
-import BudgetsItemsRepository from '../repositories/BudgetsItemsRepository';
-import BudgetsRepository from '../repositories/BudgetsRepository';
+import { parse } from "csv-parse";
+import fs from "fs";
+import Budget from "../interfaces/ICreateBudgetDTO";
+import BudgetsItemsRepository from "../repositories/BudgetsItemsRepository";
+import BudgetsRepository from "../repositories/BudgetsRepository";
 
 interface IRequest {
   shortId: string;
@@ -18,24 +17,33 @@ interface IRequest {
 export default class ImportBudgetService {
   constructor(
     private budgetsRepository: BudgetsRepository,
-    private budgetsItemsRepository: BudgetsItemsRepository,
+    private budgetsItemsRepository: BudgetsItemsRepository
   ) {}
 
-  async execute({ shortId, customer, saller, discont, subTotal, total, file }: IRequest): Promise<Budget> {
+  async execute({
+    shortId,
+    customer,
+    saller,
+    discont,
+    subTotal,
+    total,
+    file,
+  }: IRequest): Promise<Budget> {
+    const discontPercent = Math.round(
+      100 - (Number(total) * 100) / Number(subTotal)
+    );
 
-    const discontPercent = Math.round(100 - (Number(total) * 100 / Number(subTotal)));
-
-    const budget = await this.budgetsRepository.create({ 
-      shortId: Number(shortId), 
-      customer, 
-      saller, 
-      discont: Number(discont), 
-      subTotal: Number(subTotal), 
-      total: Number(total), 
-      discontPercent, 
+    const budget = await this.budgetsRepository.create({
+      shortId: Number(shortId),
+      customer,
+      saller,
+      discont: Number(discont),
+      subTotal: Number(subTotal),
+      total: Number(total),
+      discontPercent,
       itemsCount: 0,
-      budgetItems: [] 
-    })
+      budgetItems: [],
+    });
 
     const contactsReadStream = fs.createReadStream(file);
     const parsers = parse({
@@ -44,18 +52,21 @@ export default class ImportBudgetService {
 
     const parseCSV = contactsReadStream.pipe(parsers);
 
-    parseCSV.on('data', async (line) => {
-      const [ordenation, description, width, height, quantity, amount_unit] = line.map((cell: string) =>
-        cell.trim(),
-      );
+    parseCSV.on("data", async (line) => {
+      const [ordenation, description, width, height, quantity, amount_unit] =
+        line.map((cell: string) => cell.trim());
 
       budget.itemsCount += Number(quantity);
 
-      const subTotal = parseFloat((Number(quantity) * parseFloat(amount_unit)).toFixed(2))
+      const subTotal = parseFloat(
+        (Number(quantity) * parseFloat(amount_unit)).toFixed(2)
+      );
 
-      const discont = parseFloat((subTotal * (discontPercent / 100)).toFixed(2))
+      const discont = parseFloat(
+        (subTotal * (discontPercent / 100)).toFixed(2)
+      );
 
-      const total = parseFloat((subTotal - discont).toFixed(2))
+      const total = parseFloat((subTotal - discont).toFixed(2));
 
       const budgetItem = await this.budgetsItemsRepository.create({
         itemOrd: Number(ordenation),
@@ -68,15 +79,13 @@ export default class ImportBudgetService {
         total,
         width: Number(width),
         measure: `${width}x${height}`,
-      })
+      });
 
       budget.budgetItems.push(budgetItem);
+    });
 
-    })
+    await new Promise((resolve) => parseCSV.on("end", resolve));
 
-    await new Promise(resolve => parseCSV.on('end', resolve));
-
-
-    return budget
+    return budget;
   }
 }

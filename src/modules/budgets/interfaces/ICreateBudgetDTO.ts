@@ -1,6 +1,6 @@
-import BudgetItem from "./ICreateBudgetItemDTO";
+import BudgetItemEntity from "../entities/BudgetItemEntity";
 
-export default interface ICreateBudgetDTO {
+export type CreateBudgetDTO = {
   shortId: number;
   customer: string;
   saller?: string | null;
@@ -9,5 +9,5 @@ export default interface ICreateBudgetDTO {
   subTotal: number;
   total: number;
   itemsCount: number;
-  budgetItems: BudgetItem[];
-}
+  budgetItems: BudgetItemEntity[];
+};

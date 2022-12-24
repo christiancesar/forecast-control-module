@@ -1,7 +1,7 @@
 import Budget from "../../entities/BudgetEntity";
-import BudgetsRepository from "../../repositories/BudgetsRepository"
+import BudgetsRepository from "../../repositories/BudgetsRepository";
 
-export default class ListBudgetsService { 
+export default class ListBudgetsService {
   private budgetRepository: BudgetsRepository;
 
   constructor() {

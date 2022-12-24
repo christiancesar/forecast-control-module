@@ -1,4 +1,4 @@
-export default interface ICreateBudgetItemDTO {
+export type CreateBudgetItemDTO = {
   itemOrd: number;
   description: string;
   measure: string;
@@ -8,5 +8,5 @@ export default interface ICreateBudgetItemDTO {
   amount_unit: number;
   subTotal: number;
   discont: number;
-  total: number
-}
+  total: number;
+};
