@@ -1,15 +1,14 @@
-import AppError from '@shared/errors/AppError';
-import { NextFunction, Request, Response } from 'express';
+import AppError from "@shared/errors/AppError";
+import { Request, Response } from "express";
 
 export default function interceptErrorMiddleware(
   err: Error,
   request: Request,
-  response: Response,
-  _: NextFunction,
+  response: Response
 ): Response<any, Record<string, any>> {
   if (err instanceof AppError) {
     return response.status(err.statusCode).json({
-      status: 'error',
+      status: "error",
       code: err.code,
       message: err.message,
     });
@@ -18,7 +17,7 @@ export default function interceptErrorMiddleware(
   console.error(err);
 
   return response.status(500).json({
-    status: 'error',
-    message: 'Internal server error',
+    status: "error",
+    message: "Internal server error",
   });
 }
