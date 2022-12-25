@@ -2,6 +2,7 @@ import { randomUUID } from "crypto";
 
 export default class BudgetItemEntity {
   id: string;
+  budgetId?: string | null;
   itemOrd: number;
   description: string;
   measure: string;
@@ -26,8 +27,10 @@ export default class BudgetItemEntity {
     discont,
     subTotal,
     total,
+    budgetId,
   }: BudgetItemEntity) {
     this.id = randomUUID();
+    this.budgetId = budgetId;
     this.itemOrd = itemOrd;
     this.description = description;
     this.measure = measure;

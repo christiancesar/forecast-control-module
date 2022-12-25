@@ -1,9 +1,11 @@
+import { IBudgetsItemsRepository } from "@modules/budgets/repositories/Interfaces/IBudgetItemsRepository";
 import BudgetItem from "../../entities/BudgetItemEntity";
-import BudgetsItemsRepository from "../../repositories/BudgetsItemsRepository";
 
 export default class ListBudgetsItemsService {
+  constructor(private budgetItemsRepository: IBudgetsItemsRepository) {}
+
   async execute(): Promise<BudgetItem[]> {
-    const budgetsItems = await BudgetsItemsRepository.findAllBudgetsItems();
+    const budgetsItems = await this.budgetItemsRepository.findAllBudgetsItems();
 
     return budgetsItems;
   }

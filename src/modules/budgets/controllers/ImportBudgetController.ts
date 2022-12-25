@@ -1,4 +1,6 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
+import BudgetItemRepository from "../repositories/BudgetsItemsRepository";
+import BudgetsRepository from "../repositories/BudgetsRepository";
 import ImportBudgetService from "../services/ImportBudgetService";
 
 interface IRequest {
@@ -11,11 +13,17 @@ interface IRequest {
 }
 
 export default class ImportBudgetController {
-  async create(request: Request, response: Response, next: NextFunction) {
+  async create(request: Request, response: Response) {
     const { shortId, customer, saller, discont, subTotal, total } =
       request.body as IRequest;
 
-    const importBudgetService = new ImportBudgetService();
+    const budgetsRepository = new BudgetsRepository();
+    const budgetItemRepository = new BudgetItemRepository();
+
+    const importBudgetService = new ImportBudgetService(
+      budgetsRepository,
+      budgetItemRepository
+    );
 
     const budget = await importBudgetService.execute({
       shortId,

@@ -1,13 +1,10 @@
-import Budget from "../../entities/BudgetEntity";
-import BudgetsRepository from "../../repositories/BudgetsRepository";
+import { BudgetEntity } from "@modules/budgets/entities/BudgetEntity";
+import { IBudgetsRepository } from "@modules/budgets/repositories/Interfaces/IBudgetsRespository";
 
 export default class ListBudgetsService {
-  private budgetRepository: BudgetsRepository;
+  constructor(private budgetRepository: IBudgetsRepository) {}
 
-  constructor() {
-    this.budgetRepository = new BudgetsRepository();
-  }
-  async execute(): Promise<Budget[]> {
+  async execute(): Promise<BudgetEntity[]> {
     const budgets = await this.budgetRepository.findAllBudgets();
     return budgets;
   }

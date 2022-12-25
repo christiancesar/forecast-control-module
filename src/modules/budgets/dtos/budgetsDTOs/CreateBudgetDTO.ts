@@ -1,4 +1,4 @@
-import BudgetItemEntity from "../entities/BudgetItemEntity";
+import BudgetItemEntity from "../../entities/BudgetItemEntity";
 
 export type CreateBudgetDTO = {
   shortId: number;

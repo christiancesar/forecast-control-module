@@ -1,32 +1,9 @@
 import { prisma } from "@shared/database/prisma";
-import BudgetEntity from "../entities/BudgetEntity";
-import { CreateBudgetDTO } from "../interfaces/ICreateBudgetDTO";
+import { CreateBudgetDTO } from "../dtos/budgetsDTOs/CreateBudgetDTO";
+import { FindBudgetByIdDTO } from "../dtos/budgetsDTOs/FindBudgetByIdDTO";
+import { BudgetEntity } from "../entities/BudgetEntity";
+import { IBudgetsRepository } from "./Interfaces/IBudgetsRespository";
 import PrismaBudgetMapper from "./mappers/PrismaBudgetMapper";
-
-type UpdateBudgetDTO = {
-  id: string;
-  shortId: number;
-  customer: string;
-  saller?: string | null;
-  discont: number;
-  discontPercent: number;
-  subTotal: number;
-  total: number;
-  itemsCount: number;
-  updatedAt: Date;
-  createdAt: Date;
-};
-
-type FindBudgetById = {
-  id: string;
-};
-
-interface IBudgetsRepository {
-  create(data: CreateBudgetDTO): Promise<BudgetEntity>;
-  update(budget: UpdateBudgetDTO): Promise<BudgetEntity>;
-  findBudgetById(budget: FindBudgetById): Promise<BudgetEntity | null>;
-  findAllBudgets(): Promise<BudgetEntity[]>;
-}
 
 export default class BudgetsRepository implements IBudgetsRepository {
   async create({
@@ -76,7 +53,9 @@ export default class BudgetsRepository implements IBudgetsRepository {
     return PrismaBudgetMapper.toDomain(budgetUpdated);
   }
 
-  async findBudgetById(budget: FindBudgetById): Promise<BudgetEntity | null> {
+  async findBudgetById(
+    budget: FindBudgetByIdDTO
+  ): Promise<BudgetEntity | null> {
     const budgetFinded = await prisma.budget.findFirst({
       where: {
         id: budget.id,

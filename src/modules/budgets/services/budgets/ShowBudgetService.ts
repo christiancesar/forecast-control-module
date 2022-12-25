@@ -1,13 +1,22 @@
-import Budget from "../../entities/BudgetEntity";
-import BudgetsRepository from "../../repositories/BudgetsRepository";
+import { BudgetEntity } from "@modules/budgets/entities/BudgetEntity";
+import { IBudgetsRepository } from "@modules/budgets/repositories/Interfaces/IBudgetsRespository";
 
-interface IRequest {
+type ShowBudgetParams = {
   budgetId: string;
-}
+};
 
 export default class ShowBudgetService {
-  async execute({ budgetId }: IRequest): Promise<Budget | undefined> {
-    const budget = await BudgetsRepository.findById(budgetId);
-    return budget;
+  constructor(private budgetRepository: IBudgetsRepository) {}
+
+  async execute({ budgetId }: ShowBudgetParams): Promise<BudgetEntity> {
+    const budgetExist = await this.budgetRepository.findBudgetById({
+      id: budgetId,
+    });
+
+    if (!budgetExist) {
+      throw new Error("Budget not found");
+    }
+
+    return budgetExist;
   }
 }

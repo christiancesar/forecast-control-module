@@ -1,16 +1,17 @@
 import { prisma } from "@shared/database/prisma";
-import BudgetItem from "../entities/BudgetItemEntity";
-import { CreateBudgetItemDTO } from "../interfaces/ICreateBudgetItemDTO";
-
-interface IBudgetsItemsRepository {
-  create(data: CreateBudgetItemDTO): Promise<BudgetItem>;
-  update(budgetItem: BudgetItem): Promise<BudgetItem>;
-  findById(budgetItemId: string): Promise<BudgetItem | null>;
-  findAllBudgetsItems(): Promise<BudgetItem[]>;
-}
+import { CreateBudgetItemDTO } from "../dtos/budgetItemsDTOs/CreateBudgetItemDTO";
+import {
+  default as BudgetItem,
+  default as BudgetItemEntity,
+} from "../entities/BudgetItemEntity";
+import {
+  FindBudgetItemByIdDTO,
+  IBudgetsItemsRepository,
+} from "./Interfaces/IBudgetItemsRepository";
+import PrismaBudgetItemMapper from "./mappers/PrismaBudgetItemMapper";
 
 export default class BudgetItemRepository implements IBudgetsItemsRepository {
-  async create(budgetItem: CreateBudgetItemDTO): Promise<BudgetItem> {
+  async createBudgetItem(budgetItem: CreateBudgetItemDTO): Promise<BudgetItem> {
     const budgetItemCreated = await prisma.budgetItem.create({
       data: budgetItem,
     });
@@ -18,9 +19,9 @@ export default class BudgetItemRepository implements IBudgetsItemsRepository {
     return budgetItemCreated;
   }
 
-  async update(budgetItem: BudgetItem): Promise<BudgetItem> {
+  async updateBudgetItem(budgetItem: BudgetItemEntity): Promise<BudgetItem> {
     const budgetItemCreated = await prisma.budgetItem.update({
-      data: budgetItem,
+      data: PrismaBudgetItemMapper.toPrisma(budgetItem),
       where: {
         id: budgetItem.id,
       },
@@ -28,9 +29,11 @@ export default class BudgetItemRepository implements IBudgetsItemsRepository {
     return budgetItemCreated;
   }
 
-  async findById(budgetItemId: string): Promise<BudgetItem | null> {
+  async findBudgetItemById(
+    budgetItem: FindBudgetItemByIdDTO
+  ): Promise<BudgetItem | null> {
     const budgetItemCreated = await prisma.budgetItem.findFirst({
-      where: { id: budgetItemId },
+      where: { id: budgetItem.id },
     });
     return budgetItemCreated;
   }

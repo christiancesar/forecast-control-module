@@ -1,4 +1,5 @@
-import BudgetEntity, {
+import {
+  BudgetEntity,
   CommissionStatusEnum,
 } from "@modules/budgets/entities/BudgetEntity";
 import BudgetItemEntity from "@modules/budgets/entities/BudgetItemEntity";

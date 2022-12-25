@@ -5,7 +5,7 @@ export enum CommissionStatusEnum {
   OPEN = "OPEN",
   CLOSED = "CLOSED",
 }
-export default class BudgetEntity {
+export class BudgetEntity {
   id: string;
   commissionStatus: CommissionStatusEnum;
   companyId?: string | null;

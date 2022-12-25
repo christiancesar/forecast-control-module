@@ -1,8 +1,8 @@
 import { parse } from "csv-parse";
 import fs from "fs";
-import Budget from "../interfaces/ICreateBudgetDTO";
-import BudgetsItemsRepository from "../repositories/BudgetsItemsRepository";
-import BudgetsRepository from "../repositories/BudgetsRepository";
+import { BudgetEntity } from "../entities/BudgetEntity";
+import { IBudgetsItemsRepository } from "../repositories/Interfaces/IBudgetItemsRepository";
+import { IBudgetsRepository } from "../repositories/Interfaces/IBudgetsRespository";
 
 interface IRequest {
   shortId: string;
@@ -16,8 +16,8 @@ interface IRequest {
 
 export default class ImportBudgetService {
   constructor(
-    private budgetsRepository: BudgetsRepository,
-    private budgetsItemsRepository: BudgetsItemsRepository
+    private budgetsRepository: IBudgetsRepository,
+    private budgetsItemsRepository: IBudgetsItemsRepository
   ) {}
 
   async execute({
@@ -28,7 +28,7 @@ export default class ImportBudgetService {
     subTotal,
     total,
     file,
-  }: IRequest): Promise<Budget> {
+  }: IRequest): Promise<BudgetEntity> {
     const discontPercent = Math.round(
       100 - (Number(total) * 100) / Number(subTotal)
     );
@@ -68,7 +68,7 @@ export default class ImportBudgetService {
 
       const total = parseFloat((subTotal - discont).toFixed(2));
 
-      const budgetItem = await this.budgetsItemsRepository.create({
+      const budgetItem = await this.budgetsItemsRepository.createBudgetItem({
         itemOrd: Number(ordenation),
         description,
         amount_unit: Number(amount_unit),
